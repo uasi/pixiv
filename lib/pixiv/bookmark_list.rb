@@ -2,29 +2,46 @@ module Pixiv
   class BookmarkList < Page
     include PageCollection
 
+    # Returns the URL for given +member_id+ and +page_num+
+    # @param [Integer] member_id
+    # @param [Integer] page_num
+    # @return [String]
     def self.url(member_id, page_num = 1)
       "#{ROOT_URL}/bookmark.php?id=#{member_id}&rest=show&p=#{page_num}"
     end
 
+    # @return [Integer]
     lazy_attr_reader(:page_num) { at!('li.pages-current').inner_text.to_i }
+    # @return [Boolean]
     lazy_attr_reader(:last?) { at!('li.pages-current').next_element.inner_text.to_i == 0 }
+    # @return [Integer]
     lazy_attr_reader(:member_id) { doc.body.match(/pixiv\.context\.userId = '(\d+)'/).to_a[1].to_i }
+    # @return [Array<Integer>]
     lazy_attr_reader(:illust_ids) { search!('li[id^="li_"] a[href^="member_illust.php?mode=medium"]').map {|n| n.attr('href').match(/illust_id=(\d+)$/).to_a[1].to_i } }
+    # @return [Array<Hash{Symbol=>Object}>]
     lazy_attr_reader(:illust_hashes) {
       search!('li[id^="li_"]').map {|node| illust_hash_from_bookmark_item(node) }.compact
     }
 
     alias page_hashes illust_hashes
 
+    # @return [String]
     def url; self.class.url(member_id, page_num) end
+    # @return [Boolean]
     def first?; page_num == 1 end
+    # @return [String]
     def next_url; last? ? nil : self.class.url(member_id, page_num + 1) end
+    # @return [String]
     def prev_url; first? ? nil : self.class.url(member_id, page_num - 1) end
+    # @return [Class<Pixiv::Page>]
     def page_class; Illust end
+    # @return [Array<String>]
     def page_urls; illust_ids.map {|illust_id| Illust.url(illust_id) } end
 
     private
 
+    # @param [Nokogiri::HTML::Node] node
+    # @return [Hash{Symbol=>Object}] illust_hash
     def illust_hash_from_bookmark_item(node)
       return nil if node.at('img[src*="limit_unknown_s.png"]')
       member_node = node.at('a[href^="member_illust.php?id="]')
