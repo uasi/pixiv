@@ -14,7 +14,7 @@ And then execute:
 
 ## Usage
 
-TODO: Write usage instructions here
+See https://gist.github.com/4362297
 
 ## Contributing
 
