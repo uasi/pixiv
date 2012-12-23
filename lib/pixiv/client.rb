@@ -4,6 +4,7 @@ module Pixiv
     # @return [Mechanize::HTTP::Agent]
     def self.new_agent
       agent = Mechanize.new
+      agent.max_history = 1
       agent.pluggable_parser['image/gif'] = Mechanize::Download
       agent.pluggable_parser['image/jpeg'] = Mechanize::Download
       agent.pluggable_parser['image/png'] = Mechanize::Download
