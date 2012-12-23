@@ -10,6 +10,7 @@ require 'pixiv/bookmark_list'
 module Pixiv
   ROOT_URL = 'http://www.pixiv.net'
 
+  # Delegates to {Pixiv::Client#initialize}
   def self.new(*args, &block)
     Pixiv::Client.new(*args, &block)
   end
