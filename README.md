@@ -24,6 +24,10 @@ And then execute:
 
 See https://gist.github.com/4362297
 
+## Documentation
+
+[Documentation for uasi/pixiv on rubydoc.info](http://rubydoc.info/github/uasi/pixiv/master/frames)
+
 ## Contributing
 
 1. Fork it
