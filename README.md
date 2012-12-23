@@ -2,6 +2,14 @@
 
 A client library for Pixiv
 
+## Important Note
+
+The pixiv Guidelines [[en][Guidelines.en], [ja][Guidelines.ja]] prohibit to
+crawl the pixiv service. Do not abuse this library or you may be banned!
+
+[Guidelines.en]: http://www.pixiv.net/guideline.php?lang=en
+[Guidelines.ja]: http://www.pixiv.net/guideline.php?lang=ja
+
 ## Installation
 
 Add this line to your application's Gemfile:
