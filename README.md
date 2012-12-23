@@ -1,6 +1,6 @@
-# Pixiv
+# Pixiv gem
 
-A client library for Pixiv
+A client library for [pixiv](http://www.pixiv.net/)
 
 ## Important Note
 
