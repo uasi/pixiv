@@ -22,7 +22,7 @@ And then execute:
 
 ## Usage
 
-See https://gist.github.com/4362297
+See [a sample script](https://gist.github.com/4362297)
 
 ## Documentation
 
