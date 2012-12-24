@@ -76,10 +76,14 @@ module Pixiv
     end
 
     # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
-    def bookmarks(list_or_member)
+    # @param [Hash] opts
+    # @option opts [Boolean] :include_deleted (false)
+    #   whether the returning enumerator yields deleted illust as +nil+ or not
+    # @return [Pixiv::PageCollection::Enumerator]
+    def bookmarks(list_or_member, opts = {})
       list = list_or_member.is_a?(BookmarkList) ? list_or_member
                                                 : bookmark_list(list_or_member)
-      PageCollection::Enumerator.new(self, list)
+      PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
     end
 
     # Downloads the image to +io_or_filename+

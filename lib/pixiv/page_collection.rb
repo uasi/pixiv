@@ -32,14 +32,16 @@ module Pixiv
   class PageCollection::Enumerator
     include Enumerable
 
-    def initialize(client, collection)
+    def initialize(client, collection, include_deleted_page = false)
       @client = client
       @collection = collection
+      @include_deleted_page = include_deleted_page
     end
 
     def each_page
       each_collection do |collection|
         pages_from_collection(collection).each do |page|
+          next if page.nil? && !@include_deleted_page
           yield page
         end
       end
@@ -56,7 +58,11 @@ module Pixiv
             yield pages_from_collection(collection)
           end
         else
-          ::Enumerator.new {|y| each_slice {|slice| y << slice } }
+          ::Enumerator.new {|y|
+            each_slice do |slice|
+              y << (@include_deleted_page ? slice.compact : slice)
+            end
+          }
         end
       end
     end
@@ -65,8 +71,10 @@ module Pixiv
 
     def pages_from_collection(collection)
       collection.page_hashes.map {|attrs|
-        url = attrs.delete(:url)
-        collection.page_class.lazy_new(attrs) { @client.agent.get(url) }
+        if attrs
+          url = attrs.delete(:url)
+          collection.page_class.lazy_new(attrs) { @client.agent.get(url) }
+        end
       }
     end
 
