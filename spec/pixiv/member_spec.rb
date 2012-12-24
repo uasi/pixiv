@@ -29,4 +29,10 @@ describe Pixiv::Member do
     it { expect { subject.pixiv_id }.to raise_error(Pixiv::Error::NodeNotFound) }
     it { expect { subject.name}.to raise_error(Pixiv::Error::NodeNotFound) }
   end
+
+  describe '.url' do
+    it 'returns url for given member id' do
+      expect(Pixiv::Member.url(6)).to eq('http://www.pixiv.net/member.php?id=6')
+    end
+  end
 end
