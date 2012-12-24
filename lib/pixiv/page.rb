@@ -23,6 +23,13 @@ module Pixiv
       set_attrs!(attrs)
     end
 
+    # Whether +attr_name+ is fetched or not
+    # @param [String, Symbol] attr_name
+    # @return [Boolean]
+    def fetched?(attr_name = :doc)
+      return instance_variable_get(:"@#{attr_name}") != nil
+    end
+
     # @return [Nokogiri::HTTP::Document]
     def doc
       @doc ||= begin
