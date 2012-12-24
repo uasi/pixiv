@@ -41,12 +41,14 @@ module Pixiv
     # @param [String] pixiv_id
     # @param [String] password
     def login(pixiv_id, password)
-      form = agent.get("#{ROOT_URL}/index.php").forms_with(:class => 'login-form').first
-      raise Error::LoginFailed, 'login form is not available' unless form
+      doc = agent.get("#{ROOT_URL}/index.php")
+      return if doc && doc.body =~ /logout/
+      form = doc.forms_with(action: '/login.php').first
+      puts doc.body and raise Error::LoginFailed, 'login form is not available' unless form
       form.pixiv_id = pixiv_id
       form.pass = password
       doc = agent.submit(form)
-      raise Error::LoginFailed unless doc.body =~ /logout/
+      raise Error::LoginFailed unless doc && doc.body =~ /logout/
       @member_id = member_id_from_mypage(doc)
     end
 
