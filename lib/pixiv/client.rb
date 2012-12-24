@@ -75,10 +75,10 @@ module Pixiv
       BookmarkList.lazy_new(attrs) { agent.get(BookmarkList.url(member_id, page_num)) }
     end
 
-    # @param [Pixiv::Member, Integer] member_or_member_id
-    # @param [Integer] page_num
-    def bookmarks(member_or_member_id = member_id, page_num = 1)
-      list = bookmark_list(member_or_member_id, page_num)
+    # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
+    def bookmarks(list_or_member)
+      list = list_or_member.is_a?(BookmarkList) ? list_or_member
+                                                : bookmark_list(list_or_member)
       PageCollection::Enumerator.new(self, list)
     end
 
