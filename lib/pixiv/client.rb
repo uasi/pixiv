@@ -111,11 +111,19 @@ module Pixiv
     # @param [Pixiv::Illust] illust the manga to download
     # @param [Array<String, Symbol, #call>] pattern pattern (see {#filename_from_pattern})
     # @note +illust#manga?+ must be +true+
-    def download_manga(illust, pattern)
-      illust.original_image_urls.each do |url|
-        filename = filename_from_pattern(pattern, illust, url)
-        FileUtils.mkdir_p(File.dirname(filename))
-        @agent.download(url, filename, [], illust.original_image_referer)
+    # @todo Document +&block+
+    def download_manga(illust, pattern, &block)
+      action = DownloadActionRegistry.new(&block)
+      illust.original_image_urls.each_with_index do |url, n|
+        begin
+          action.before_each.call(url, n) if action.before_each
+          filename = filename_from_pattern(pattern, illust, url)
+          FileUtils.mkdir_p(File.dirname(filename))
+          @agent.download(url, filename, [], illust.original_image_referer)
+          action.after_each.call(url, n) if action.after_each
+        rescue
+          action.on_error ? action.on_error.call($!) : raise
+        end
       end
     end
 
@@ -159,6 +167,24 @@ module Pixiv
         else i
         end
       }.join('')
+    end
+  end
+
+  class DownloadActionRegistry
+    def initialize(&block)
+      instance_eval(&block) if block
+    end
+
+    def before_each(&block)
+      block ? (@before_each = block) : @before_each
+    end
+
+    def after_each(&block)
+      block ? (@after_each = block) : @after_each
+    end
+
+    def on_error(&block)
+      block ? (@on_error = block) : @on_error
     end
   end
 end
