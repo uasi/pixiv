@@ -11,6 +11,8 @@ module Pixiv
     end
 
     # @return [Integer]
+    lazy_attr_reader(:bookmarks_count) { at!('a[href="/bookmark.php?type=illust_all"]').inner_text.match(/(\d+)/).to_a[1].to_i }
+    # @return [Integer]
     lazy_attr_reader(:page_num) { at!('li.pages-current').inner_text.to_i }
     # @return [Boolean]
     lazy_attr_reader(:last?) { at!('li.pages-current').next_element.inner_text.to_i == 0 }
