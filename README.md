@@ -14,11 +14,15 @@ crawl the pixiv service. Do not abuse this library or you may be banned!
 
 Add this line to your application's Gemfile:
 
-    gem 'pixiv', github: 'uasi/pixiv'
+    gem 'pixiv'
 
 And then execute:
 
     $ bundle
+
+Or install it yourself as:
+
+    $ gem install pixiv
 
 ## Usage
 
