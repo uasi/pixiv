@@ -1,0 +1,7 @@
+language: ruby
+rvm:
+  - ruby-head
+  - 1.9.3
+notifications:
+  email:
+    - uasi@uasi.jp
