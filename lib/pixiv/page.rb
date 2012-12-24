@@ -85,14 +85,14 @@ module Pixiv
     # @param [String] path XPath or CSS path
     # @return [Nokogiri::HTML::Node]
     def at!(path, node = doc)
-      node.at(path) || Error::NodeNotFound.new("node for `#{path}` not found").raise
+      node.at(path) or raise Error::NodeNotFound, "node for `#{path}` not found"
     end
 
     # +node.search(path) or raise error
     # @param [String] path XPath or CSS path
     # @return [Array<Nokogiri::HTML::Node>]
     def search!(path, node = doc)
-      node.search(path) || Error::NodeNotFound.new("node for `#{path}` not found").raise
+      node.search(path) or raise Error::NodeNotFound, "node for `#{path}` not found"
     end
   end
 end
