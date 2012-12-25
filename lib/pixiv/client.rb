@@ -80,6 +80,7 @@ module Pixiv
 
     # @param [Pixiv::Member, Integer] member_or_member_id
     # @param [Integer] page_num
+    # @return [Pixiv::BookmarkList]
     def bookmark_list(member_or_member_id = member_id, page_num = 1)
       x = member_or_member_id
       member_id = x.is_a?(Member) ? x.member_id : x
