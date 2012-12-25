@@ -60,6 +60,13 @@ module Pixiv
     end
   end
 
+  class PrivateBookmarkList < BookmarkList
+    # (see super.url)
+    def self.url(member_id, page_num = 1)
+      "#{ROOT_URL}/bookmark.php?id=#{member_id}&rest=hide&p=#{page_num}"
+    end
+  end
+
   class BookmarkList::WithClient
     include Page::WithClient
 
@@ -73,4 +80,6 @@ module Pixiv
       client.bookmarks(self)
     end
   end
+
+  class PrivateBookmarkList::WithClient < BookmarkList::WithClient; end
 end
