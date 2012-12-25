@@ -7,6 +7,11 @@ module Pixiv
       "#{ROOT_URL}/member_illust.php?id=#{member_id}&p=#{page_num}"
     end
 
+    # @return [Integer]
+    lazy_attr_reader(:count) {
+      at!('.layout-cell .count-badge').inner_text.match(/^\d+/).to_s.to_i
+    }
+
     private
 
     # FIXME: rename to ..._list_item
