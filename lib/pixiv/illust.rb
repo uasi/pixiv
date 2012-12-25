@@ -30,8 +30,8 @@ module Pixiv
     lazy_attr_reader(:title) { raise NotImplementError.new('XXX') }
     # @return [Integer]
     lazy_attr_reader(:num_pages) {
-      n = at!('//ul[@class="meta"]/li[2]').inner_text.match(/(\d+)P$/).to_a[1]
-      n && n.to_i
+      n = doc.at('//ul[@class="meta"]/li[2]')
+      n && n.inner_text.match(/(\d+)P$/).to_a[1].to_i
     }
 
     alias id illust_id
