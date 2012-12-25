@@ -53,17 +53,19 @@ module Pixiv
     end
 
     # @param [Integer] illust_id
-    # @return [Pixiv::Illust]
+    # @return [Pixiv::Illust] illust bound to +self+
     def illust(illust_id)
       attrs = {illust_id: illust_id}
-      Illust.lazy_new(attrs) { agent.get(Illust.url(illust_id)) }
+      illust = Illust.lazy_new(attrs) { agent.get(Illust.url(illust_id)) }
+      illust.bind(self)
     end
 
     # @param [Integer] member_id
-    # @return [Pixiv::Member]
+    # @return [Pixiv::Member] member bound to +self+
     def member(member_id = member_id)
       attrs = {member_id: member_id}
-      Member.lazy_new(attrs) { agent.get(Member.url(member_id)) }
+      member = Member.lazy_new(attrs) { agent.get(Member.url(member_id)) }
+      member.bind(self)
     end
 
     # @param [Pixiv::Member, Integer] member_or_member_id

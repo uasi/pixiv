@@ -19,4 +19,18 @@ module Pixiv
     # @return [String]
     def url; self.class.url(member_id) end
   end
+
+  module Member::WithClient
+    include Page::WithClient
+
+    # (see Pixiv::Client#bookmark_list)
+    def bookmark_list(page_num = 1)
+      client.bookmark_list(self, page_num)
+    end
+
+    # (see Pixiv::Client#bookmarks)
+    def bookmarks(page_num = 1, &block)
+      client.bookmarks(self, page_num, &block)
+    end
+  end
 end

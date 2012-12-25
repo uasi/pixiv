@@ -49,6 +49,21 @@ module Pixiv
       self
     end
 
+    # Bind +self+ to +client+
+    # @return self
+    def bind(client)
+      if self.class.const_defined?(:WithClient)
+        mod = self.class.const_get(:WithClient)
+      else
+        mod = Page::WithClient
+      end
+      unless singleton_class.include?(mod)
+        extend(mod)
+      end
+      self.client = client
+      self
+    end
+
     protected
 
     # Defines lazy attribute reader
@@ -94,5 +109,10 @@ module Pixiv
     def search!(path, node = doc)
       node.search(path) or raise Error::NodeNotFound, "node for `#{path}` not found"
     end
+  end
+
+  module Page::WithClient
+    # @return [Pixiv::Client]
+    attr_accessor :client
   end
 end
