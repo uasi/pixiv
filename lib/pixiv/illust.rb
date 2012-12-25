@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module Pixiv
   class Illust < Page
     # Returns the URL for given +illust_id+
@@ -25,7 +27,9 @@ module Pixiv
     # @return [Integer]
     lazy_attr_reader(:member_id) { at!('#rpc_u_id')['title'].to_i }
     # @return [String]
-    lazy_attr_reader(:member_name) { at!('.profile_area a')['title'] }
+    lazy_attr_reader(:member_name) {
+      at!('title').inner_text.match(%r!^「#{Regexp.escape(title)}」/「(.+)」の(?:イラスト|漫画) \[pixiv\]$!).to_a[1]
+    }
     # @return [String]
     lazy_attr_reader(:title) { at!('.work-info h1.title').inner_text }
     # @return [Integer]
