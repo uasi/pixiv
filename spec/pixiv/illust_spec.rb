@@ -5,8 +5,10 @@ describe Pixiv::Illust do
 
   describe '.new' do
     subject { Pixiv::Illust.new(illust_doc) }
+    its(:title) { should == 'Illust #345' }
     its(:illust_id) { should == 345 }
     its(:member_id) { should == 6 }
+    its(:member_name) { should == 'Sayoko' }
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345.jpg' }
@@ -18,14 +20,18 @@ describe Pixiv::Illust do
   describe '.new', 'given attrs covers attrs extracted from doc' do
     before do
       @attrs = {
+        title: 'Illust #105',
         illust_id: 105,
         member_id: 13,
+        member_name: 'Duke',
         small_image_url: 'http://i1.pixiv.net/img1/img/duke/105_s.jpg',
       }
     end
     subject { Pixiv::Illust.new(illust_doc, @attrs) }
+    its(:title) { should == 'Illust #105' }
     its(:illust_id) { should == 105 }
     its(:member_id) { should == 13 }
+    its(:member_name) { should == 'Duke' }
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105.jpg' }

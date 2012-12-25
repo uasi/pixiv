@@ -25,9 +25,9 @@ module Pixiv
     # @return [Integer]
     lazy_attr_reader(:member_id) { at!('#rpc_u_id').attr('title').to_i }
     # @return [String]
-    lazy_attr_reader(:member_name) { raise NotImplementError.new('XXX') }
+    lazy_attr_reader(:member_name) { at!('.profile_area a')['title'] }
     # @return [String]
-    lazy_attr_reader(:title) { raise NotImplementError.new('XXX') }
+    lazy_attr_reader(:title) { at!('h1.title').inner_text }
     # @return [Integer]
     lazy_attr_reader(:num_pages) {
       n = doc.at('//ul[@class="meta"]/li[2]')
