@@ -16,7 +16,7 @@ def init
   require 'bundler/setup'
   Bundler.require
 
-  $pixiv = Pixiv.new(id, password) do |agent|
+  $pixiv = Pixiv.client(id, password) do |agent|
     agent.user_agent_alias = 'Mac Safari'
     agent.set_proxy(*proxy) if proxy
   end
