@@ -11,7 +11,7 @@ module Pixiv
     end
 
     # @return [Integer]
-    lazy_attr_reader(:bookmarks_count) { at!('a[href="/bookmark.php?type=illust_all"]').inner_text.match(/(\d+)/).to_a[1].to_i }
+    lazy_attr_reader(:count) { at!('a[href="/bookmark.php?type=illust_all"]').inner_text.match(/(\d+)/).to_a[1].to_i }
     # @return [Integer]
     lazy_attr_reader(:page_num) { at!('li.pages-current').inner_text.to_i }
     # @return [Boolean]
@@ -25,6 +25,8 @@ module Pixiv
       search!('li[id^="li_"]').map {|node| illust_hash_from_bookmark_item(node) }
     }
 
+    # @deprecated Use {#count} instead.
+    alias bookmarks_count count
     alias page_hashes illust_hashes
 
     # @return [String]
