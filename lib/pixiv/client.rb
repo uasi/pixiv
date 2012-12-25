@@ -82,7 +82,8 @@ module Pixiv
       page_list_with_class(BookmarkList, member_or_member_id, page_num)
     end
 
-    # (see #bookmark_list)
+    # @param [Pixiv::Member, Integer] member_or_member_id
+    # @param [Integer] page_num
     # @return [Pixiv::PrivateBookmarkList]
     def private_bookmark_list(member_or_member_id = member_id, page_num = 1)
       bookmark_list_with_class(PrivateBookmarkList, member_or_member_id, page_num)
@@ -122,7 +123,7 @@ module Pixiv
 
     # Downloads the image to +io_or_filename+
     # @param [Pixiv::Illust] illust
-    # @param [#write, String, Array<String, Symbol, #call>] io_or_filename io or filename or pattern (see {#filename_from_pattern})
+    # @param [#write, String, Array<String, Symbol, #call>] io_or_filename io or filename or pattern for {#filename_from_pattern}
     # @param [Symbol] size image size (+:small+, +:medium+, or +:original+)
     def download_illust(illust, io_or_filename, size = :original)
       size = {:s => :small, :m => :medium, :o => :original}[size] || size
@@ -143,7 +144,7 @@ module Pixiv
 
     # Downloads the images to +pattern+
     # @param [Pixiv::Illust] illust the manga to download
-    # @param [Array<String, Symbol, #call>] pattern pattern (see {#filename_from_pattern})
+    # @param [Array<String, Symbol, #call>] pattern pattern for {#filename_from_pattern}
     # @note +illust#manga?+ must be +true+
     # @todo Document +&block+
     def download_manga(illust, pattern, &block)
