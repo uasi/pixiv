@@ -82,6 +82,12 @@ module Pixiv
       page_list_with_class(BookmarkList, member_or_member_id, page_num)
     end
 
+    # (see #bookmark_list)
+    # @return [Pixiv::PrivateBookmarkList]
+    def private_bookmark_list(member_or_member_id = member_id, page_num = 1)
+      bookmark_list_with_class(PrivateBookmarkList, member_or_member_id, page_num)
+    end
+
     # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
     # @param [Hash] opts
     # @option opts [Boolean] :include_deleted (false)
@@ -94,6 +100,24 @@ module Pixiv
     # (see #illusts)
     def bookmarks(list_or_member, opts = {})
       pages_with_class(BookmarkList, list_or_member, opts)
+    end
+
+    # (see #illusts)
+    def private_bookmarks(list_or_member = member_id, opts = {})
+      it = list_or_member
+      if it.is_a?(BookmarkList) && !it.is_a?(PrivateBookmarkList)
+        raise ArgumentError, 'list is not private'
+      end
+      if it.is_a?(BookmarkList) && it.member_id != member_id
+        raise ArgumentError, 'list is not mine'
+      end
+      if it.is_a?(Member) && it.id != member_id
+        raise ArgumentError, 'member is not me'
+      end
+      if it.is_a?(Integer) && it != member_id
+        raise ArgumentError, 'member is not me'
+      end
+      pages_with_class(PrivateBookmarkList, it, opts)
     end
 
     # Downloads the image to +io_or_filename+
