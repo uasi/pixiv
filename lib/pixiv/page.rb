@@ -50,6 +50,7 @@ module Pixiv
     end
 
     # Bind +self+ to +client+
+    # @api private
     # @return self
     def bind(client)
       if self.class.const_defined?(:WithClient)
