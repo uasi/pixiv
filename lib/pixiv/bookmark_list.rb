@@ -59,4 +59,18 @@ module Pixiv
       }
     end
   end
+
+  class BookmarkList::WithClient
+    include Page::WithClient
+
+    # @return [Pixiv::Member]
+    def member
+      client.member(member_id)
+    end
+
+    # @return [Pixiv::PageCollection::Enumerator]
+    def bookmarks
+      client.bookmarks(self)
+    end
+  end
 end
