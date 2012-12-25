@@ -6,6 +6,7 @@ require 'pixiv/illust'
 require 'pixiv/member'
 require 'pixiv/page_collection'
 require 'pixiv/bookmark_list'
+require 'pixiv/illust_list'
 
 module Pixiv
   ROOT_URL = 'http://www.pixiv.net'
