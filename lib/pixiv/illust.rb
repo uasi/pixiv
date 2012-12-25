@@ -37,6 +37,8 @@ module Pixiv
       n = doc.at('//ul[@class="meta"]/li[2]')
       n && n.inner_text.match(/(\d+)P$/).to_a[1].to_i
     }
+    # @return [Array<String>]
+    lazy_attr_reader(:tag_names) { search!('ul.tags a.text').map {|n| n.inner_text } }
 
     alias id illust_id
     alias original_image_referrer original_image_referer # referrer vs. referer

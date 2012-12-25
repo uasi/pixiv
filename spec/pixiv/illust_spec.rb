@@ -9,6 +9,7 @@ describe Pixiv::Illust do
     its(:illust_id) { should == 345 }
     its(:member_id) { should == 6 }
     its(:member_name) { should == 'Sayoko' }
+    its(:tag_names) { should == %w[tag_1 tag_2 tag_3]}
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345.jpg' }
@@ -24,6 +25,7 @@ describe Pixiv::Illust do
         illust_id: 105,
         member_id: 13,
         member_name: 'Duke',
+        tag_names: %w[target_1 target_2 target_3],
         small_image_url: 'http://i1.pixiv.net/img1/img/duke/105_s.jpg',
       }
     end
@@ -32,6 +34,7 @@ describe Pixiv::Illust do
     its(:illust_id) { should == 105 }
     its(:member_id) { should == 13 }
     its(:member_name) { should == 'Duke' }
+    its(:tag_names) { should == %w[target_1 target_2 target_3] }
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105.jpg' }
