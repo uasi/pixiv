@@ -71,4 +71,23 @@ module Pixiv
       @image_url_components ||= small_image_url.match(%r{^(.+)_s(\.\w+(?:\?\d+)?)$}).to_a[1, 3]
     end
   end
+
+  module Illust::WithClient
+    include Page::WithClient
+
+    # @return [Pixiv::Member]
+    def member
+      client.member(member_id)
+    end
+
+    # (see Pixiv::Client#download_illust)
+    def download_illust(io_or_filename, size = :original)
+      client.download_illust(self, io_or_filename, size)
+    end
+
+    # (see Pixiv::Client#download_manga)
+    def download_manga(pattern, &block)
+      client.download_manga(self, pattern, &block)
+    end
+  end
 end
