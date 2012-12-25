@@ -72,20 +72,14 @@ module Pixiv
     # @param [Integer] page_num
     # @return [Pixiv::IllustList]
     def illust_list(member_or_member_id = member_id, page_num = 1)
-      x = member_or_member_id
-      member_id = x.is_a?(Member) ? x.member_id : x
-      attrs = {member_id: member_id, page_num: page_num}
-      IllustList.lazy_new(attrs) { agent.get(IllustList.url(member_id, page_num)) }
+      page_list_with_class(IllustList, member_or_member_id, page_num)
     end
 
     # @param [Pixiv::Member, Integer] member_or_member_id
     # @param [Integer] page_num
     # @return [Pixiv::BookmarkList]
     def bookmark_list(member_or_member_id = member_id, page_num = 1)
-      x = member_or_member_id
-      member_id = x.is_a?(Member) ? x.member_id : x
-      attrs = {member_id: member_id, page_num: page_num}
-      BookmarkList.lazy_new(attrs) { agent.get(BookmarkList.url(member_id, page_num)) }
+      page_list_with_class(BookmarkList, member_or_member_id, page_num)
     end
 
     # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
@@ -94,20 +88,12 @@ module Pixiv
     #   whether the returning enumerator yields deleted illust as +nil+ or not
     # @return [Pixiv::PageCollection::Enumerator]
     def illusts(list_or_member, opts = {})
-      list = list_or_member.is_a?(BookmarkList) ? list_or_member
-                                                : illust_list(list_or_member)
-      PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
+      pages_with_class(IllustList, list_or_member, opts)
     end
 
-    # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
-    # @param [Hash] opts
-    # @option opts [Boolean] :include_deleted (false)
-    #   whether the returning enumerator yields deleted illust as +nil+ or not
-    # @return [Pixiv::PageCollection::Enumerator]
+    # (see #illusts)
     def bookmarks(list_or_member, opts = {})
-      list = list_or_member.is_a?(BookmarkList) ? list_or_member
-                                                : bookmark_list(list_or_member)
-      PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
+      pages_with_class(BookmarkList, list_or_member, opts)
     end
 
     # Downloads the image to +io_or_filename+
@@ -152,6 +138,24 @@ module Pixiv
     end
 
     protected
+
+    def page_list_with_class(list_class, member_or_member_id, page_num = 1)
+      it = member_or_member_id
+      member_id = it.is_a?(Member) ? it.member_id : it
+      attrs = {member_id: member_id, page_num: page_num}
+      list_class.lazy_new(attrs) {
+        agent.get(list_class.url(member_id, page_num))
+      }
+    end
+
+    def pages_with_class(list_class, list_or_member, opts = {})
+      if list_or_member.is_a?(list_class)
+        list = list_or_member
+      else
+        list = page_list_with_class(list_class, list_or_member)
+      end
+      PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
+    end
 
     def ensure_logged_in
       doc = agent.get("#{ROOT_URL}/mypage.php")
