@@ -2,6 +2,14 @@
 
 A client library for [pixiv](http://www.pixiv.net/)
 
+[![Build Status](https://secure.travis-ci.org/uasi/pixiv.png?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/uasi/pixiv.png?travis)][gemnasium]
+[![Code Climate](https://codeclimate.com/badge.png)][codeclimate]
+
+[travis]: http://travis-ci.org/uasi/pixiv
+[gemnasium]: https://gemnasium.com/uasi/pixiv
+[codeclimate]: https://codeclimate.com/github/uasi/pixiv
+
 ## Important Note
 
 The pixiv Guidelines [[en][Guidelines.en], [ja][Guidelines.ja]] prohibit to
