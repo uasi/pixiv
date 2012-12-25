@@ -10,9 +10,9 @@ module Pixiv
     # @return [String]
     lazy_attr_reader(:name) { at!('.profile_area h2').inner_text }
     # @return [Integer]
-    lazy_attr_reader(:member_id) { at!('input[name="user_id"]').attr('value').to_i }
+    lazy_attr_reader(:member_id) { at!('input[name="user_id"]')['value'].to_i }
     # return [Integer]
-    lazy_attr_reader(:pixiv_id) { at!('.profile_area img').attr('src').match(%r{/profile/([a-z_-]+)/}).to_a[1] }
+    lazy_attr_reader(:pixiv_id) { at!('.profile_area img')['src'].match(%r{/profile/([a-z_-]+)/}).to_a[1] }
 
     alias id member_id
 

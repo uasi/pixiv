@@ -8,7 +8,7 @@ module Pixiv
     end
 
     # @return [String]
-    lazy_attr_reader(:small_image_url) { at!('meta[property="og:image"]').attr('content') }
+    lazy_attr_reader(:small_image_url) { at!('meta[property="og:image"]')['content'] }
     # @return [String]
     lazy_attr_reader(:medium_image_url) { image_url_components.join('_m') }
     # @return [String]
@@ -19,11 +19,11 @@ module Pixiv
               : (0...num_pages).map {|n| image_url_components.join("_p#{n}") }
     }
     # @return [String]
-    lazy_attr_reader(:original_image_referer) { ROOT_URL + '/' + at!('//div[@class="works_display"]/a').attr('href') }
+    lazy_attr_reader(:original_image_referer) { ROOT_URL + '/' + at!('//div[@class="works_display"]/a')['href'] }
     # @return [Integer]
-    lazy_attr_reader(:illust_id) { at!('#rpc_i_id').attr('title').to_i }
+    lazy_attr_reader(:illust_id) { at!('#rpc_i_id')['title'].to_i }
     # @return [Integer]
-    lazy_attr_reader(:member_id) { at!('#rpc_u_id').attr('title').to_i }
+    lazy_attr_reader(:member_id) { at!('#rpc_u_id')['title'].to_i }
     # @return [String]
     lazy_attr_reader(:member_name) { at!('.profile_area a')['title'] }
     # @return [String]

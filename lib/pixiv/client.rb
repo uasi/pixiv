@@ -136,7 +136,7 @@ module Pixiv
     end
 
     def member_id_from_mypage(doc)
-      doc.at('.profile_area a').attr('href').match(/(\d+)$/).to_a[1].to_i
+      doc.at('.profile_area a')['href'].match(/(\d+)$/).to_a[1].to_i
     end
 
     # Generate filename from +pattern+ in context of +illust+ and +url+

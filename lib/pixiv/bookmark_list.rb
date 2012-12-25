@@ -19,7 +19,7 @@ module Pixiv
     # @return [Integer]
     lazy_attr_reader(:member_id) { doc.body.match(/pixiv\.context\.userId = '(\d+)'/).to_a[1].to_i }
     # @return [Array<Integer>]
-    lazy_attr_reader(:illust_ids) { search!('li[id^="li_"] a[href^="member_illust.php?mode=medium"]').map {|n| n.attr('href').match(/illust_id=(\d+)$/).to_a[1].to_i } }
+    lazy_attr_reader(:illust_ids) { search!('li[id^="li_"] a[href^="member_illust.php?mode=medium"]').map {|n| n['href'].match(/illust_id=(\d+)$/).to_a[1].to_i } }
     # @return [Array<Hash{Symbol=>Object}, nil>]
     lazy_attr_reader(:illust_hashes) {
       search!('li[id^="li_"]').map {|node| illust_hash_from_bookmark_item(node) }
@@ -55,7 +55,7 @@ module Pixiv
         title: illust_node.inner_text,
         member_id: member_node['href'].match(/\?id=(\d+)/).to_a[1].to_i,
         member_name: member_node.inner_text,
-        small_image_url: illust_node.at('img').attr('src'),
+        small_image_url: illust_node.at('img')['src'],
       }
     end
   end
