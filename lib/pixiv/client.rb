@@ -175,7 +175,7 @@ module Pixiv
     # the +pattern+ is concatenated as the returning +filename+.
     #
     # * +:image_name+ in the +pattern+ is replaced with the base name of the +url+
-    # * Any other symbol is replaced with the value of +illust.__send__(the_symbol)+
+    # * Any other symbol is replaced with the value of +illust.send(the_symbol)+
     # * +#call+-able object is replaced with the value of +the_object.call(illust)+
     # * String is left as-is
     def filename_from_pattern(pattern, illust, url)
@@ -186,7 +186,7 @@ module Pixiv
             name += '.' + $1
           end
           name
-        elsif i.is_a?(Symbol) then illust.__send__(i)
+        elsif i.is_a?(Symbol) then illust.send(i)
         elsif i.respond_to?(:call) then i.call(illust)
         else i
         end
