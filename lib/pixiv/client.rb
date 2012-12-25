@@ -170,6 +170,7 @@ module Pixiv
     end
   end
 
+  # @private
   class DownloadActionRegistry
     def initialize(&block)
       instance_eval(&block) if block
