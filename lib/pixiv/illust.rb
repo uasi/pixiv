@@ -39,6 +39,8 @@ module Pixiv
     }
     # @return [Array<String>]
     lazy_attr_reader(:tag_names) { search!('ul.tags a.text').map {|n| n.inner_text } }
+    # @return [String]
+    lazy_attr_reader(:caption) { at!('.work-info .caption').inner_text }
 
     alias id illust_id
     alias original_image_referrer original_image_referer # referrer vs. referer
