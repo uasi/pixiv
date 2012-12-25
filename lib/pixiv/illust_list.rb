@@ -9,7 +9,7 @@ module Pixiv
 
     # @return [Integer]
     lazy_attr_reader(:count) {
-      at!('.layout-cell .count-badge').inner_text.match(/^\d+/).to_s.to_i
+      at!('.layout-cell .count-badge').inner_text.match(/\d+/).to_s.to_i
     }
 
     private

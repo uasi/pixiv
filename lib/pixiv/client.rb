@@ -220,7 +220,7 @@ module Pixiv
     end
 
     def member_id_from_mypage(doc)
-      doc.at('.profile_area a')['href'].match(/(\d+)$/).to_a[1].to_i
+      doc.at('.profile_area a')['href'].match(/\d+$/).to_s.to_i
     end
   end
 
