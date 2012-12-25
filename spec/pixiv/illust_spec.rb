@@ -11,6 +11,9 @@ describe Pixiv::Illust do
     its(:member_name) { should == 'Sayoko' }
     its(:tag_names) { should == %w[tag_1 tag_2 tag_3]}
     its(:caption) { should == 'Caption' }
+    its(:views_count) { should == 1000 }
+    its(:rated_count) { should == 10 }
+    its(:score) { should == 100 }
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345.jpg' }
@@ -28,6 +31,9 @@ describe Pixiv::Illust do
         member_name: 'Duke',
         tag_names: %w[target_1 target_2 target_3],
         caption: 'The Professional',
+        views_count: 1300,
+        rated_count: 13,
+        score: 130,
         small_image_url: 'http://i1.pixiv.net/img1/img/duke/105_s.jpg',
       }
     end
@@ -38,6 +44,9 @@ describe Pixiv::Illust do
     its(:member_name) { should == 'Duke' }
     its(:tag_names) { should == %w[target_1 target_2 target_3] }
     its(:caption) { should == 'The Professional' }
+    its(:views_count) { should == 1300 }
+    its(:rated_count) { should == 13 }
+    its(:score) { should == 130 }
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105.jpg' }
