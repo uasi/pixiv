@@ -70,11 +70,32 @@ module Pixiv
 
     # @param [Pixiv::Member, Integer] member_or_member_id
     # @param [Integer] page_num
+    # @return [Pixiv::IllustList]
+    def illust_list(member_or_member_id = member_id, page_num = 1)
+      x = member_or_member_id
+      member_id = x.is_a?(Member) ? x.member_id : x
+      attrs = {member_id: member_id, page_num: page_num}
+      IllustList.lazy_new(attrs) { agent.get(IllustList.url(member_id, page_num)) }
+    end
+
+    # @param [Pixiv::Member, Integer] member_or_member_id
+    # @param [Integer] page_num
     def bookmark_list(member_or_member_id = member_id, page_num = 1)
       x = member_or_member_id
       member_id = x.is_a?(Member) ? x.member_id : x
       attrs = {member_id: member_id, page_num: page_num}
       BookmarkList.lazy_new(attrs) { agent.get(BookmarkList.url(member_id, page_num)) }
+    end
+
+    # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
+    # @param [Hash] opts
+    # @option opts [Boolean] :include_deleted (false)
+    #   whether the returning enumerator yields deleted illust as +nil+ or not
+    # @return [Pixiv::PageCollection::Enumerator]
+    def illusts(list_or_member, opts = {})
+      list = list_or_member.is_a?(BookmarkList) ? list_or_member
+                                                : illust_list(list_or_member)
+      PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
     end
 
     # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
