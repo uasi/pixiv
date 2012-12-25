@@ -44,6 +44,12 @@ module Pixiv
     # @api experimental
     # @return [Array<Nokogiri::XML::NodeSet, nil>]
     lazy_attr_reader(:anchors_in_caption) { doc.search('.work-info .caption a') }
+    # @return [Integer]
+    lazy_attr_reader(:views_count) { at!('.view-count').inner_text.to_i }
+    # @return [Integer]
+    lazy_attr_reader(:rated_count) { at!('.rated-count').inner_text.to_i }
+    # @return [Integer]
+    lazy_attr_reader(:score) { at!('.score-count').inner_text.to_i }
 
     alias id illust_id
     alias original_image_referrer original_image_referer # referrer vs. referer
