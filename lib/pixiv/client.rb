@@ -161,6 +161,37 @@ module Pixiv
       end
     end
 
+    # Generate filename from +pattern+ in context of +illust+ and +url+
+    #
+    # @api private
+    # @param [Array<String, Symbol, #call>] pattern
+    # @param [Pixiv::Illust] illust
+    # @param [String] url
+    # @return [String] filename
+    #
+    # The +pattern+ is an array of string, symbol, or object that responds to +#call+.
+    # Each component of the +pattern+ is replaced by the following rules and then
+    # the +pattern+ is concatenated as the returning +filename+.
+    #
+    # * +:image_name+ in the +pattern+ is replaced with the base name of the +url+
+    # * Any other symbol is replaced with the value of +illust.__send__(the_symbol)+
+    # * +#call+-able object is replaced with the value of +the_object.call(illust)+
+    # * String is left as-is
+    def filename_from_pattern(pattern, illust, url)
+      pattern.map {|i|
+        if i == :image_name
+          name = File.basename(url)
+          if name =~ /\.(\w+)\?\d+$/
+            name += '.' + $1
+          end
+          name
+        elsif i.is_a?(Symbol) then illust.__send__(i)
+        elsif i.respond_to?(:call) then i.call(illust)
+        else i
+        end
+      }.join('')
+    end
+
     protected
 
     def page_list_with_class(list_class, member_or_member_id, page_num = 1)
@@ -189,36 +220,6 @@ module Pixiv
 
     def member_id_from_mypage(doc)
       doc.at('.profile_area a')['href'].match(/(\d+)$/).to_a[1].to_i
-    end
-
-    # Generate filename from +pattern+ in context of +illust+ and +url+
-    #
-    # @param [Array<String, Symbol, #call>] pattern
-    # @param [Pixiv::Illust] illust
-    # @param [String] url
-    # @return [String] filename
-    #
-    # The +pattern+ is an array of string, symbol, or object that responds to +#call+.
-    # Each component of the +pattern+ is replaced by the following rules and then
-    # the +pattern+ is concatenated as the returning +filename+.
-    #
-    # * +:image_name+ in the +pattern+ is replaced with the base name of the +url+
-    # * Any other symbol is replaced with the value of +illust.__send__(the_symbol)+
-    # * +#call+-able object is replaced with the value of +the_object.call(illust)+
-    # * String is left as-is
-    def filename_from_pattern(pattern, illust, url)
-      pattern.map {|i|
-        if i == :image_name
-          name = File.basename(url)
-          if name =~ /\.(\w+)\?\d+$/
-            name += '.' + $1
-          end
-          name
-        elsif i.is_a?(Symbol) then illust.__send__(i)
-        elsif i.respond_to?(:call) then i.call(illust)
-        else i
-        end
-      }.join('')
     end
   end
 
