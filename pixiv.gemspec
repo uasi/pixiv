@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Pixiv::VERSION
   gem.authors       = ["Tomoki Aonuma"]
   gem.email         = ["uasi@uasi.jp"]
-  gem.description   = %q{A client library for Pixiv}
-  gem.summary       = %q{A client library for Pixiv}
+  gem.description   = %q{A client library for pixiv}
+  gem.summary       = %q{A client library for pixiv}
   gem.homepage      = "https://github.com/uasi/pixiv"
 
   gem.files         = `git ls-files`.split($/)
