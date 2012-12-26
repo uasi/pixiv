@@ -51,6 +51,10 @@ def PBL(p = 1)
   $pixiv.private_bookmark_list(p)
 end
 
+def Is(list)
+  $pixiv.illusts(list)
+end
+
 def Ws(member)
   $pixiv.works(member)
 end
