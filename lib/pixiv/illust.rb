@@ -35,8 +35,8 @@ module Pixiv
     # @return [Integer, nil]
     lazy_attr_reader(:num_pages) {
       node = doc.at('//ul[@class="meta"]/li[2]')
-      n = node.inner_text.match(/(\d+)P$/).to_a[1]
-      n || n.to_i
+      n = node ? node.inner_text.match(/(\d+)P$/).to_a[1] : nil
+      n && n.to_i
     }
     # @return [Array<String>]
     lazy_attr_reader(:tag_names) { search!('ul.tags a.text').map {|n| n.inner_text } }
