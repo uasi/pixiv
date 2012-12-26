@@ -86,7 +86,7 @@ module Pixiv
     # @param [Integer] page_num
     # @return [Pixiv::PrivateBookmarkList]
     def private_bookmark_list(member_or_member_id = member_id, page_num = 1)
-      bookmark_list_with_class(PrivateBookmarkList, member_or_member_id, page_num)
+      page_list_with_class(PrivateBookmarkList, member_or_member_id, page_num)
     end
 
     # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
