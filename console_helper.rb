@@ -23,6 +23,12 @@ def init
 
   Kernel.const_set(:P, $pixiv)
   Kernel.const_set(:M, $pixiv.member)
+  Kernel.const_set(:IL, $pixiv.illust_list)
+  Kernel.const_set(:BL, $pixiv.bookmark_list)
+  Kernel.const_set(:PBL, $pixiv.private_bookmark_list)
+  Kernel.const_set(:Is, $pixiv.illusts($pixiv.member))
+  Kernel.const_set(:Bs, $pixiv.bookmarks($pixiv.member))
+  Kernel.const_set(:PBs, $pixiv.private_bookmarks)
 end
 
 def I(id)
@@ -33,6 +39,22 @@ def M(id)
   $pixiv.member(id)
 end
 
-def BL(member_id, p = 1)
-  $pixiv.bookmark_list(member_id, p)
+def IL(member, p = 1)
+  $pixiv.illust_list(member, p)
+end
+
+def BL(member, p = 1)
+  $pixiv.bookmark_list(member, p)
+end
+
+def PBL(p = 1)
+  $pixiv.private_bookmark_list($pixiv.member_id, p)
+end
+
+def Is(list_or_member)
+  $pixiv.illusts(list_or_member)
+end
+
+def Bs(list_or_member)
+  $pixiv.bookmarks(list_or_member)
 end
