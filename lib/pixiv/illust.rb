@@ -81,12 +81,16 @@ module Pixiv
       client.member(member_id)
     end
 
-    # (see Pixiv::Client#download_illust)
+    # Download illust
+    #
+    # See {Pixiv::Client#download_illust} for the detail.
     def download_illust(io_or_filename, size = :original)
       client.download_illust(self, io_or_filename, size)
     end
 
-    # (see Pixiv::Client#download_manga)
+    # Download manga
+    #
+    # See {Pixiv::Client#download_manga} for the detail.
     def download_manga(pattern, &block)
       client.download_manga(self, pattern, &block)
     end

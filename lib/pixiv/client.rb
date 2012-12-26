@@ -83,7 +83,7 @@ module Pixiv
     end
 
     # @param [Pixiv::Member, Integer] member_or_id
-    # @param [Integer] page_num
+    # @param [Integer] page
     # @return [Pixiv::PrivateBookmarkList] private bookmark list bound to +self+
     def private_bookmark_list(member_or_id = member_id, page = 1)
       illust_list_with_class(PrivateBookmarkList, member_or_id, page)
