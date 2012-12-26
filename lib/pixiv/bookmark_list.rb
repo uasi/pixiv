@@ -80,8 +80,8 @@ module Pixiv
     end
   end
 
-  class BookmarkList::WithClient
-    include Page::WithClient
+  module BookmarkList::WithClient
+    include IllustList::WithClient
 
     # @return [Pixiv::Member]
     def member
@@ -93,6 +93,4 @@ module Pixiv
       client.bookmarks(self)
     end
   end
-
-  class PrivateBookmarkList::WithClient < BookmarkList::WithClient; end
 end

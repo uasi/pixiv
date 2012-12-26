@@ -65,6 +65,7 @@ module Pixiv
   end
 
   # FIXME: This should be parent of that
-  class WorkList::WithClient < BookmarkList::WithClient
+  module WorkList::WithClient
+    include BookmarkList::WithClient
   end
 end
