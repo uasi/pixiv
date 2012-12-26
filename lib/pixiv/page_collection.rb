@@ -84,11 +84,13 @@ module Pixiv
       end
     end
 
-    def count(*item)
-      if item.empty? && !block_given? && @collection.respond_to?(:total_count)
-         @collection.total_count
+    def size
+      if @collection.first? && @collection.respond_to?(:total_count)
+        @collection.total_count
+      elsif @collection.respond_to?(:max_size) && @collection.respond_to?(:total_count)
+        @collection.total_count - (@collection.max_size * (@collection.page - 1))
       else
-        super
+        count { true }
       end
     end
 

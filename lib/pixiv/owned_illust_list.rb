@@ -5,6 +5,8 @@ module Pixiv
   #
   # Implements common methods for bookmark.php and member_illust.php.
   class OwnedIllustList < IllustList
+    ILLUSTS_PER_PAGE = 20
+
     # Returns the URL for given +member_id+ and +page+
     # @param [Integer] member_id
     # @param [Integer] page
@@ -44,6 +46,11 @@ module Pixiv
     # @return [String]
     def prev_url
       first? ? nil : self.class.url(member_id, page - 1)
+    end
+
+    # @return [Integer]
+    def max_size
+      ILLUSTS_PER_PAGE
     end
   end
 
