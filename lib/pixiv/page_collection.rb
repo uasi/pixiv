@@ -32,10 +32,6 @@ module Pixiv
       not_implemented!
     end
 
-    def page_urls
-      page_hashes.map {|h| h[:url] }
-    end
-
     def size
       page_hashes.size
     end

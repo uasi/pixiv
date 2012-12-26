@@ -22,15 +22,6 @@ module Pixiv
       page_hashes
     end
 
-    # Ditto.
-
-    # URLs extracted from doc
-    # @return [Array<{Symbol=>Object}, nil>]
-    def illust_urls
-      page_urls
-    end
-  end
-
   module IllustList::WithClient
     include Page::WithClient
     include Enumerable
