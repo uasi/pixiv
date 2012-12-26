@@ -52,14 +52,6 @@ module Pixiv
       @member_id = member_id_from_mypage(doc)
     end
 
-    # @param [Integer] illust_id
-    # @return [Pixiv::Illust] illust bound to +self+
-    def illust(illust_id)
-      attrs = {illust_id: illust_id}
-      illust = Illust.lazy_new(attrs) { agent.get(Illust.url(illust_id)) }
-      illust.bind(self)
-    end
-
     # @param [Integer] member_id
     # @return [Pixiv::Member] member bound to +self+
     def member(member_id = member_id)
@@ -68,60 +60,55 @@ module Pixiv
       member.bind(self)
     end
 
-=begin
-    # @param [Pixiv::Member, Integer] member_or_member_id
-    # @param [Integer] page_num
-    # @return [Pixiv::IllustList]
-    def illust_list(member_or_member_id = member_id, page_num = 1)
-      page_list_with_class(IllustList, member_or_member_id, page_num)
+    # @param [Integer] illust_id
+    # @return [Pixiv::Illust] illust bound to +self+
+    def illust(illust_id)
+      attrs = {illust_id: illust_id}
+      illust = Illust.lazy_new(attrs) { agent.get(Illust.url(illust_id)) }
+      illust.bind(self)
     end
 
-    # @param [Pixiv::Member, Integer] member_or_member_id
-    # @param [Integer] page_num
-    # @return [Pixiv::BookmarkList]
-    def bookmark_list(member_or_member_id = member_id, page_num = 1)
-      page_list_with_class(BookmarkList, member_or_member_id, page_num)
+    # @param [Pixiv::Member, Integer] member_or_id
+    # @param [Integer] page
+    # @return [Pixiv::WorkList] work list bound to +self+
+    def work_list(member_or_id = member_id, page = 1)
+      illust_list_with_class(WorkList, member_or_id, page)
     end
 
-    # @param [Pixiv::Member, Integer] member_or_member_id
-    # @param [Integer] page_num
-    # @return [Pixiv::PrivateBookmarkList]
-    def private_bookmark_list(member_or_member_id = member_id, page_num = 1)
-      page_list_with_class(PrivateBookmarkList, member_or_member_id, page_num)
+    # @param [Pixiv::Member, Integer] member_or_id
+    # @param [Integer] page
+    # @return [Pixiv::BookmarkList] bookmark list bound to +self+
+    def bookmark_list(member_or_id = member_id, page = 1)
+      illust_list_with_class(BookmarkList, member_or_id, page)
     end
 
-    # @param [Pixiv::BookmarkList, Pixiv::Member, Integer] list_or_member
+    # @param [Pixiv::Member, Integer] member_or_id
+    # @param [Integer] page_num
+    # @return [Pixiv::PrivateBookmarkList] private bookmark list bound to +self+
+    def private_bookmark_list(member_or_id = member_id, page = 1)
+      illust_list_with_class(PrivateBookmarkList, member_or_id, page)
+    end
+
+    # @param [Pixiv::IllustList] list
     # @param [Hash] opts
     # @option opts [Boolean] :include_deleted (false)
     #   whether the returning enumerator yields deleted illust as +nil+ or not
     # @return [Pixiv::PageCollection::Enumerator]
-    def illusts(list_or_member, opts = {})
-      pages_with_class(IllustList, list_or_member, opts)
+    def illusts(list, opts = {})
+      PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
     end
 
-    # (see #illusts)
-    def bookmarks(list_or_member, opts = {})
-      pages_with_class(BookmarkList, list_or_member, opts)
+    def works(member_or_id = member_id, page = 1, opts = {})
+      illusts(work_list(member_or_id, page), opts)
     end
 
-    # (see #illusts)
-    def private_bookmarks(list_or_member = member_id, opts = {})
-      it = list_or_member
-      if it.is_a?(BookmarkList) && !it.is_a?(PrivateBookmarkList)
-        raise ArgumentError, 'list is not private'
-      end
-      if it.is_a?(BookmarkList) && it.member_id != member_id
-        raise ArgumentError, 'list is not mine'
-      end
-      if it.is_a?(Member) && it.id != member_id
-        raise ArgumentError, 'member is not me'
-      end
-      if it.is_a?(Integer) && it != member_id
-        raise ArgumentError, 'member is not me'
-      end
-      pages_with_class(PrivateBookmarkList, it, opts)
+    def bookmarks(member_or_id = member_id, page = 1, opts = {})
+      illusts(bookmark_list(member_or_id, page), opts)
     end
-=end
+
+    def private_bookmarks(page = 1, opts = {})
+      illusts(private_bookmark_list(member_id, page), opts)
+    end
 
     # Downloads the image to +io_or_filename+
     # @param [Pixiv::Illust] illust
@@ -197,25 +184,14 @@ module Pixiv
 
     protected
 
-=begin
-    def page_list_with_class(list_class, member_or_member_id, page_num = 1)
-      it = member_or_member_id
-      member_id = it.is_a?(Member) ? it.member_id : it
-      attrs = {member_id: member_id, page_num: page_num}
+    def illust_list_with_class(list_class, member_or_id, page)
+      it = member_or_id
+      id = it.is_a?(Member) ? it.member_id : it.to_i
+      attrs = {member_id: id} # Don't set page or it will prevent checking bounds.
       list_class.lazy_new(attrs) {
-        agent.get(list_class.url(member_id, page_num))
-      }
+        agent.get(list_class.url(id, page))
+      }.bind(self)
     end
-
-    def pages_with_class(list_class, list_or_member, opts = {})
-      if list_or_member.is_a?(list_class)
-        list = list_or_member
-      else
-        list = page_list_with_class(list_class, list_or_member)
-      end
-      PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
-    end
-=end
 
     def ensure_logged_in
       doc = agent.get("#{ROOT_URL}/mypage.php")
