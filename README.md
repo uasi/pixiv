@@ -32,6 +32,38 @@ Or install it yourself as:
 
     $ gem install pixiv
 
+## Synopsis
+
+```
+
+pixiv = Pixiv.client('pixiv_id', 'password') {|agent|
+  agent.user_agent_alias = 'Mac Safari'
+}
+
+illust_id = 123
+illust = pixiv.illust(illust_id)
+if illust.manga?
+  pixiv.download_manga(illust, ['manga/', :image_name])
+else
+  pixiv.download_illust(illust, ['illust/', :image_name])
+end
+
+member_id = 456
+member = pixiv.member(member_id)
+member.works.each do |illust|
+  puts illust.title
+  puts illust.caption
+end
+
+me = pixiv.member
+me.bookmarks do |illust|
+  author = illust.member
+  puts author.name
+  puts author.works.count
+end
+
+```
+
 ## Usage
 
 See [a sample script](https://gist.github.com/4362297)
