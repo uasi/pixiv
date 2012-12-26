@@ -1,15 +1,16 @@
 require 'mechanize'
 
 module Pixiv
-  autoload :PrivateBookmarkList, 'pixiv/bookmark_list'
   autoload :BookmarkList,        'pixiv/bookmark_list'
   autoload :Client,              'pixiv/client'
   autoload :Error,               'pixiv/error'
   autoload :Illust,              'pixiv/illust'
-  autoload :WorkList,            'pixiv/work_list'
   autoload :Member,              'pixiv/member'
+  autoload :OwnedIllustList,     'pixiv/owned_illust_list'
   autoload :Page,                'pixiv/page'
   autoload :PageCollection,      'pixiv/page_collection'
+  autoload :PrivateBookmarkList, 'pixiv/bookmark_list'
+  autoload :WorkList,            'pixiv/work_list'
 
   ROOT_URL = 'http://www.pixiv.net'
 

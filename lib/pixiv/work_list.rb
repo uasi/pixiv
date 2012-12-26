@@ -1,50 +1,19 @@
 module Pixiv
-  class WorkList < IllustList
+  class WorkList < OwnedIllustList
+    # (see super.url)
     def self.url(member_id, page = 1)
       "#{ROOT_URL}/member_illust.php?id=#{member_id}&p=#{page}"
     end
 
     # @return [Integer]
-    lazy_attr_reader(:page) {
-      at!('li.pages-current').inner_text.to_i
-    }
-    # @return [Integer]
     lazy_attr_reader(:total_count) {
       node = at!('.layout-cell .count-badge')
       node.inner_text.match(/\d+/).to_s.to_i
-    }
-    # @return [Boolean]
-    lazy_attr_reader(:last?) {
-      at!('li.pages-current').next_element.inner_text.to_i == 0
     }
     # @return [Array<Hash{Symbol=>Object}, nil>]
     lazy_attr_reader(:page_hashes) {
       search!('.display_works li').map {|n| hash_from_list_item(n) }
     }
-    # @return [Integer]
-    lazy_attr_reader(:member_id) {
-      doc.body.match(/pixiv\.context\.userId = '(\d+)'/).to_a[1].to_i
-    }
-
-    # @return [String]
-    def url
-      self.class.url(member_id, page)
-    end
-
-    # @return [Boolean]
-    def first?
-      page == 1
-    end
-
-    # @return [String]
-    def next_url
-      last? ? nil : self.class.url(member_id, page + 1)
-    end
-
-    # @return [String]
-    def prev_url
-      first? ? nil : self.class.url(member_id, page - 1)
-    end
 
     private
 
@@ -62,10 +31,5 @@ module Pixiv
           small_image_url: illust_node.at('img')['src'],
       }
     end
-  end
-
-  # FIXME: This should be parent of that
-  module WorkList::WithClient
-    include BookmarkList::WithClient
   end
 end
