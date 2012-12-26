@@ -34,7 +34,7 @@ Or install it yourself as:
 
 ## Synopsis
 
-```
+```ruby
 
 pixiv = Pixiv.client('pixiv_id', 'password') {|agent|
   agent.user_agent_alias = 'Mac Safari'
