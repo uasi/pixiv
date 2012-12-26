@@ -1,11 +1,11 @@
 module Pixiv
   module PageCollection
     def first?
-      raise NotImplementError
+      next_url.nil?
     end
 
     def last?
-      raise NotImplementError
+      prev_url.nil?
     end
 
     def next_url
@@ -20,12 +20,12 @@ module Pixiv
       raise NotImplementError
     end
 
-    def page_urls
+    def page_hashes
       raise NotImplementError
     end
 
-    def page_hash
-      page_urls.map {|url| {url: url} }
+    def page_urls
+      page_hashes.map {|h| h[:url] }
     end
   end
 

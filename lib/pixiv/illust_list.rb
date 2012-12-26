@@ -10,7 +10,7 @@ module Pixiv
       Page
     end
 
-    alias illust_hashes page_hash # TODO: pluralize PageCollection#page_hash
+    alias illust_hashes page_hashes
     alias illust_urls page_urls
   end
 
