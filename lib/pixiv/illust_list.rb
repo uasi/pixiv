@@ -34,5 +34,16 @@ module Pixiv
         yield Illust.lazy_new(attrs) { client.agent.get(url) }
       end
     end
+
+    # @returns [Illust, nil]
+    def next
+      return if last?
+      self.class.lazy_new { client.agent.get(next_url) }
+    end
+
+    def prev
+      return if first?
+      self.class.lazy_new { client.agent.get(prev_url) }
+    end
   end
 end
