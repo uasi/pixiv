@@ -7,7 +7,7 @@ module Pixiv
     attr_reader :total_count
 
     def page_class
-      Page
+      Illust
     end
 
     alias illust_hashes page_hashes
