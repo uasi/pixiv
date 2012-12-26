@@ -21,6 +21,7 @@ module Pixiv
     def illust_hashes
       page_hashes
     end
+  end
 
   module IllustList::WithClient
     include Page::WithClient
