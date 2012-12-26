@@ -1,6 +1,6 @@
 module Pixiv
   # FIXME: IllustList should be parent of BookmarkList
-  class IllustList < BookmarkList
+  class WorkList < BookmarkList
     include PageCollection
 
     def self.url(member_id, page_num = 1)
@@ -37,6 +37,6 @@ module Pixiv
   end
 
   # FIXME: This should be parent of that
-  class IllustList::WithClient < BookmarkList::WithClient
+  class WorkList::WithClient < BookmarkList::WithClient
   end
 end
