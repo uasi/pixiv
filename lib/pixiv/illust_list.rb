@@ -10,8 +10,23 @@ module Pixiv
       Illust
     end
 
-    alias illust_hashes page_hashes
-    alias illust_urls page_urls
+    # Don't just do `alias illust_hashes page_hashes`;
+    # the illust_hashes intends to call the page_hashes
+    # overridden in a subclass.
+
+    # An array of illust attrs extracted from doc
+    # @return [Array<{Symbol=>Object}, nil>]
+    def illust_hashes
+      page_hashes
+    end
+
+    # Ditto.
+
+    # URLs extracted from doc
+    # @return [Array<{Symbol=>Object}, nil>]
+    def illust_urls
+      page_urls
+    end
   end
 
   module IllustList::WithClient
