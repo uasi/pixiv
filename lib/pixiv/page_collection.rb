@@ -67,6 +67,15 @@ module Pixiv
       end
     end
 
+    def each_collection
+      collection = @collection
+      loop do
+        yield collection
+        next_url = collection.next_url or break
+        collection = collection.class.lazy_new { @client.agent.get(next_url) }
+      end
+    end
+
     private
 
     def pages_from_collection(collection)
@@ -76,14 +85,6 @@ module Pixiv
           collection.page_class.lazy_new(attrs) { @client.agent.get(url) }
         end
       }
-    end
-
-    def each_collection(collection = @collection)
-      loop do
-        yield collection
-        break unless collection.next_url
-        collection = collection.class.new(@client.agent.get(collection.next_url))
-      end
     end
   end
 end
