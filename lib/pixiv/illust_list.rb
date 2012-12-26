@@ -11,11 +11,18 @@ module Pixiv
     lazy_attr_reader(:count) {
       at!('.layout-cell .count-badge').inner_text.match(/\d+/).to_s.to_i
     }
+    # @return [Array<Integer>]
+    lazy_attr_reader(:illust_ids) {
+      search!('.display_works li a').map {|n| n['href'].match(/illust_id=(\d+)$/).to_a[1].to_i }
+    }
+    # @return [Array<Hash{Symbol=>Object}, nil>]
+    lazy_attr_reader(:illust_hashes) {
+      search!('.display_works li').map {|node| illust_hash_from_list_item(node) }
+    }
 
     private
 
-    # FIXME: rename to ..._list_item
-    def illust_hash_from_bookmark_item(node)
+    def illust_hash_from_list_item(node)
       return nil if node.at('img[src*="limit_unknown_s.png"]')
       illust_node = node.at('a')
       illust_id = illust_node['href'].match(/illust_id=(\d+)/).to_a[1].to_i
