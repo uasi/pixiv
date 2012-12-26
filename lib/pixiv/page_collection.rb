@@ -1,31 +1,43 @@
 module Pixiv
   module PageCollection
     def first?
-      raise NotImplementError
+      next_url.nil?
     end
 
     def last?
-      raise NotImplementError
+      prev_url.nil?
     end
 
+    private
+    def not_implemented!
+      name = caller[0][/`([^']*)'/, 1]
+      raise NotImplementedError,
+            "unimplemented method `#{name}' for #{self}"
+    end
+    public
+
     def next_url
-      raise NotImplementError
+      not_implemented!
     end
 
     def prev_url
-      raise NotImplementError
+      not_implemented!
     end
 
     def page_class
-      raise NotImplementError
+      not_implemented!
+    end
+
+    def page_hashes
+      not_implemented!
     end
 
     def page_urls
-      raise NotImplementError
+      page_hashes.map {|h| h[:url] }
     end
 
-    def page_hash
-      page_urls.map {|url| {url: url} }
+    def size
+      page_hashes.size
     end
   end
 
@@ -67,6 +79,23 @@ module Pixiv
       end
     end
 
+    def each_collection
+      collection = @collection
+      loop do
+        yield collection
+        next_url = collection.next_url or break
+        collection = collection.class.lazy_new { @client.agent.get(next_url) }
+      end
+    end
+
+    def count(*item)
+      if item.empty? && !block_given? && @collection.respond_to?(:total_count)
+         @collection.total_count
+      else
+        super
+      end
+    end
+
     private
 
     def pages_from_collection(collection)
@@ -76,14 +105,6 @@ module Pixiv
           collection.page_class.lazy_new(attrs) { @client.agent.get(url) }
         end
       }
-    end
-
-    def each_collection(collection = @collection)
-      loop do
-        yield collection
-        break unless collection.next_url
-        collection = collection.class.new(@client.agent.get(collection.next_url))
-      end
     end
   end
 end
