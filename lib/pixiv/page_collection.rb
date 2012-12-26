@@ -9,19 +9,19 @@ module Pixiv
     end
 
     def next_url
-      raise NotImplementError
+      raise NotImplementedError
     end
 
     def prev_url
-      raise NotImplementError
+      raise NotImplementedError
     end
 
     def page_class
-      raise NotImplementError
+      raise NotImplementedError
     end
 
     def page_hashes
-      raise NotImplementError
+      raise NotImplementedError
     end
 
     def page_urls
