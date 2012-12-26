@@ -90,22 +90,31 @@ module Pixiv
     end
 
     # @param [Pixiv::IllustList] list
-    # @param [Hash] opts
-    # @option opts [Boolean] :include_deleted (false)
-    #   whether the returning enumerator yields deleted illust as +nil+ or not
-    # @return [Pixiv::PageCollection::Enumerator]
+    # @!macro [new] opts_and_return
+    #   @param [Hash] opts
+    #   @option opts [Boolean] :include_deleted (false)
+    #     whether the returning enumerator yields deleted illust as +nil+ or not
+    #   @return [Pixiv::PageCollection::Enumerator]
     def illusts(list, opts = {})
       PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
     end
 
+    # @param [Pixiv::Member, Integer] member_or_id
+    # @param [Integer] page
+    # @!macro opts_and_return
     def works(member_or_id = member_id, page = 1, opts = {})
       illusts(work_list(member_or_id, page), opts)
     end
 
+    # @param [Pixiv::Member, Integer] member_or_id
+    # @param [Integer] page
+    # @!macro opts_and_return
     def bookmarks(member_or_id = member_id, page = 1, opts = {})
       illusts(bookmark_list(member_or_id, page), opts)
     end
 
+    # @param [Integer] page
+    # @!macro opts_and_return
     def private_bookmarks(page = 1, opts = {})
       illusts(private_bookmark_list(member_id, page), opts)
     end

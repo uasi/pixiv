@@ -2,13 +2,13 @@ module Pixiv
   class Page
     # A new Page
     # @param [Hash{Symbol=>Object}] attrs
-    # @yieldreturn [Nokogiri::HTML::Document]
+    # @yieldreturn [Nokogiri::XML::Document]
     def self.lazy_new(attrs = {}, &doc_creator)
       self.new(doc_creator, attrs)
     end
 
     # @overload initialize(doc, attrs = {})
-    #   @param [Nokogiri::HTTP::Document] doc
+    #   @param [Nokogiri::XML::Document] doc
     #   @param [Hash{Symbol=>Object}] attrs
     # @overload initialize(doc_creator, attrs = {})
     #   @param [#call] doc_creator
@@ -30,7 +30,7 @@ module Pixiv
       instance_variable_defined?(:"@#{attr_name}")
     end
 
-    # @return [Nokogiri::HTTP::Document]
+    # @return [Nokogiri::XML::Document]
     def doc
       @doc ||= begin
                  doc = @doc_creator.call
@@ -99,14 +99,14 @@ module Pixiv
 
     # +node.at(path)+ or raise error
     # @param [String] path XPath or CSS path
-    # @return [Nokogiri::HTML::Node]
+    # @return [Nokogiri::XML::Node]
     def at!(path, node = doc)
       node.at(path) or raise Error::NodeNotFound, "node for `#{path}` not found"
     end
 
     # +node.search(path) or raise error
     # @param [String] path XPath or CSS path
-    # @return [Array<Nokogiri::HTML::Node>]
+    # @return [Array<Nokogiri::XML::Node>]
     def search!(path, node = doc)
       node.search(path) or raise Error::NodeNotFound, "node for `#{path}` not found"
     end

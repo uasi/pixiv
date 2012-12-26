@@ -3,7 +3,9 @@ module Pixiv
   class IllustList < Page
     include PageCollection
 
+    # @return [Integer]
     attr_reader :page
+    # @return [Integer]
     attr_reader :total_count
 
     def page_class
@@ -33,6 +35,7 @@ module Pixiv
     include Page::WithClient
     include Enumerable
 
+    # @yieldparam [Illust] illust
     def each
       illust_hashes.each do |attrs|
         url = attrs.delete(:url)
