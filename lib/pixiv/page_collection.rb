@@ -8,20 +8,28 @@ module Pixiv
       prev_url.nil?
     end
 
+    private
+    def not_implemented!
+      name = caller[0][/`([^']*)'/, 1]
+      raise NotImplementedError,
+            "unimplemented method `#{name}' for #{self}"
+    end
+    public
+
     def next_url
-      raise NotImplementedError
+      not_implemented!
     end
 
     def prev_url
-      raise NotImplementedError
+      not_implemented!
     end
 
     def page_class
-      raise NotImplementedError
+      not_implemented!
     end
 
     def page_hashes
-      raise NotImplementedError
+      not_implemented!
     end
 
     def page_urls
