@@ -27,7 +27,7 @@ module Pixiv
     # @param [String, Symbol] attr_name
     # @return [Boolean]
     def fetched?(attr_name = :doc)
-      instance_variable_get(:"@#{attr_name}") != nil
+      instance_variable_defined?(:"@#{attr_name}")
     end
 
     # @return [Nokogiri::HTTP::Document]
