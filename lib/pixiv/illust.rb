@@ -32,10 +32,11 @@ module Pixiv
     }
     # @return [String]
     lazy_attr_reader(:title) { at!('.work-info h1.title').inner_text }
-    # @return [Integer]
+    # @return [Integer, nil]
     lazy_attr_reader(:num_pages) {
-      n = doc.at('//ul[@class="meta"]/li[2]')
-      n && n.inner_text.match(/(\d+)P$/).to_a[1].to_i
+      node = doc.at('//ul[@class="meta"]/li[2]')
+      n = node.inner_text.match(/(\d+)P$/).to_a[1]
+      n || n.to_i
     }
     # @return [Array<String>]
     lazy_attr_reader(:tag_names) { search!('ul.tags a.text').map {|n| n.inner_text } }
