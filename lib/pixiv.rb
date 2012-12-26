@@ -6,7 +6,7 @@ module Pixiv
   autoload :Client,              'pixiv/client'
   autoload :Error,               'pixiv/error'
   autoload :Illust,              'pixiv/illust'
-  autoload :IllustList,          'pixiv/illust_list'
+  autoload :IllustList,          'pixiv/work_list'
   autoload :Member,              'pixiv/member'
   autoload :Page,                'pixiv/page'
   autoload :PageCollection,      'pixiv/page_collection'
