@@ -68,6 +68,7 @@ module Pixiv
       member.bind(self)
     end
 
+=begin
     # @param [Pixiv::Member, Integer] member_or_member_id
     # @param [Integer] page_num
     # @return [Pixiv::IllustList]
@@ -120,6 +121,7 @@ module Pixiv
       end
       pages_with_class(PrivateBookmarkList, it, opts)
     end
+=end
 
     # Downloads the image to +io_or_filename+
     # @param [Pixiv::Illust] illust
@@ -195,6 +197,7 @@ module Pixiv
 
     protected
 
+=begin
     def page_list_with_class(list_class, member_or_member_id, page_num = 1)
       it = member_or_member_id
       member_id = it.is_a?(Member) ? it.member_id : it
@@ -212,6 +215,7 @@ module Pixiv
       end
       PageCollection::Enumerator.new(self, list, !!opts[:include_deleted])
     end
+=end
 
     def ensure_logged_in
       doc = agent.get("#{ROOT_URL}/mypage.php")
