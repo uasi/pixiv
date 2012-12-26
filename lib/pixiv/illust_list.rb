@@ -4,7 +4,7 @@ module Pixiv
     include PageCollection
 
     attr_reader :page
-    attr_reader :count
+    attr_reader :total_count
 
     def page_class
       Page

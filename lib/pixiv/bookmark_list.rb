@@ -13,7 +13,7 @@ module Pixiv
       at!('li.pages-current').inner_text.to_i
     }
     # @return [Integer]
-    lazy_attr_reader(:count) {
+    lazy_attr_reader(:total_count) {
       node = at!('a[href="/bookmark.php?type=illust_all"]')
       node.inner_text.match(/\d+/).to_s.to_i
     }
@@ -30,8 +30,8 @@ module Pixiv
       doc.body.match(/pixiv\.context\.userId = '(\d+)'/).to_a[1].to_i
     }
 
-    # @deprecated Use {#count} instead.
-    alias bookmarks_count count
+    # @deprecated Use {#total_count} instead.
+    alias bookmarks_count total_count
 
     # @return [String]
     def url

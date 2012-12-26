@@ -9,7 +9,7 @@ module Pixiv
       at!('li.pages-current').inner_text.to_i
     }
     # @return [Integer]
-    lazy_attr_reader(:count) {
+    lazy_attr_reader(:total_count) {
       node = at!('.layout-cell .count-badge')
       node.inner_text.match(/\d+/).to_s.to_i
     }
