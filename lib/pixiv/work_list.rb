@@ -8,7 +8,7 @@ module Pixiv
     # @return [Integer]
     lazy_attr_reader(:total_count) {
       node = at!('.layout-cell .count-badge')
-      node.inner_text.match(/\d+/).to_s.to_i
+      node.inner_text[/\d+/].to_i
     }
     # @return [Array<Hash{Symbol=>Object}, nil>]
     lazy_attr_reader(:page_hashes) {
@@ -24,7 +24,7 @@ module Pixiv
     def hash_from_list_item(node)
       return nil if node.at('img[src*="limit_unknown_s.png"]')
       illust_node = node.at('a')
-      illust_id = illust_node['href'].match(/illust_id=(\d+)/).to_a[1].to_i
+      illust_id = illust_node['href'][/illust_id=(\d+)/, 1].to_i
       {
           url: Illust.url(illust_id),
           illust_id: illust_id,

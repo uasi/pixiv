@@ -12,7 +12,8 @@ module Pixiv
     # @return [Integer]
     lazy_attr_reader(:member_id) { at!('input[name="user_id"]')['value'].to_i }
     # return [Integer]
-    lazy_attr_reader(:pixiv_id) { at!('.profile_area img')['src'].match(%r{/profile/([a-z_-]+)/}).to_a[1] }
+    lazy_attr_reader(:pixiv_id) { at!('.profile_area img')['src'][%r{/profile/([a-z_-]+)/}, 1] }
+
 
     alias id member_id
 

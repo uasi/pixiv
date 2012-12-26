@@ -28,14 +28,14 @@ module Pixiv
     lazy_attr_reader(:member_id) { at!('#rpc_u_id')['title'].to_i }
     # @return [String]
     lazy_attr_reader(:member_name) {
-      at!('title').inner_text.match(%r!^「#{Regexp.escape(title)}」/「(.+)」の(?:イラスト|漫画) \[pixiv\]$!).to_a[1]
+      at!('title').inner_text[%r!^「#{Regexp.escape(title)}」/「(.+)」の(?:イラスト|漫画) \[pixiv\]$!, 1]
     }
     # @return [String]
     lazy_attr_reader(:title) { at!('.work-info h1.title').inner_text }
     # @return [Integer, nil]
     lazy_attr_reader(:num_pages) {
       node = doc.at('//ul[@class="meta"]/li[2]')
-      n = node ? node.inner_text.match(/(\d+)P$/).to_a[1] : nil
+      n = node ? node.inner_text[/(\d+)P$/, 1] : nil
       n && n.to_i
     }
     # @return [Array<String>]
