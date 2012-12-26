@@ -27,6 +27,10 @@ module Pixiv
     def page_urls
       page_hashes.map {|h| h[:url] }
     end
+
+    def size
+      page_hashes.size
+    end
   end
 
   class PageCollection::Enumerator
@@ -73,6 +77,14 @@ module Pixiv
         yield collection
         next_url = collection.next_url or break
         collection = collection.class.lazy_new { @client.agent.get(next_url) }
+      end
+    end
+
+    def count(*item)
+      if item.empty? && !block_given? && @collection.respond_to?(:total_count)
+         @collection.total_count
+      else
+        super
       end
     end
 
