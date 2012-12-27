@@ -1,6 +1,9 @@
 module Pixiv
   # @abstract
   class IllustList < Page
+    # @!parse
+    # include ::Pixiv::IllustList::WithClient
+
     include PageCollection
 
     def doc

@@ -1,5 +1,8 @@
 module Pixiv
   class Page
+    # @!parse
+    # include ::Pixiv::Page::WithClient
+
     # A new Page
     # @param [Hash{Symbol=>Object}] attrs
     # @yieldreturn [Nokogiri::XML::Document]

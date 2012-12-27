@@ -5,6 +5,9 @@ module Pixiv
   #
   # Implements common methods for bookmark.php and member_illust.php.
   class OwnedIllustList < IllustList
+    # @!parse
+    # include ::Pixiv::OwnedIllustList::WithClient
+
     ILLUSTS_PER_PAGE = 20
 
     # Returns the URL for given +member_id+ and +page+

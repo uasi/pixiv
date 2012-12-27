@@ -2,6 +2,9 @@
 
 module Pixiv
   class Illust < Page
+    # @!parse
+    # include ::Pixiv::Illust::WithClient
+
     # Returns the URL for given +illust_id+
     # @param [Integer] illust_id
     # @return [String]

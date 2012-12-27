@@ -1,5 +1,8 @@
 module Pixiv
   class Member < Page
+    # @!parse
+    # include ::Pixiv::Member::WithClient
+
     # Returns the URL for given +member_id+
     # @param [Integer] member_id
     # @return [String]
