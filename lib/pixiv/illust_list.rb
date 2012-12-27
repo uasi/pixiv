@@ -50,7 +50,7 @@ module Pixiv
       end
     end
 
-    # @returns [Illust, nil]
+    # @return [Illust, nil]
     def next
       return if last?
       self.class.lazy_new(next_attrs) { client.agent.get(next_url) }
