@@ -79,7 +79,7 @@ module Pixiv
   end
 
   module Illust::WithClient
-    include Page::WithClient
+    include ::Pixiv::Page::WithClient
 
     # @return [Pixiv::Member]
     def member

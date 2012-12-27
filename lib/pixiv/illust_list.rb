@@ -4,7 +4,7 @@ module Pixiv
     # @!parse
     # include ::Pixiv::IllustList::WithClient
 
-    include PageCollection
+    include ::Pixiv::PageCollection
 
     def doc
       unless @doc
@@ -42,8 +42,8 @@ module Pixiv
   end
 
   module IllustList::WithClient
-    include Page::WithClient
-    include Enumerable
+    include ::Pixiv::Page::WithClient
+    include ::Enumerable
 
     # @yieldparam [Illust] illust
     def each

@@ -27,7 +27,7 @@ module Pixiv
   end
 
   module Member::WithClient
-    include Page::WithClient
+    include ::Pixiv::Page::WithClient
 
     def work_list(page = 1)
       client.work_list(self, page)

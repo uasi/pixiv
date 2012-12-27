@@ -61,7 +61,7 @@ module Pixiv
   end
 
   module OwnedIllustList::WithClient
-    include IllustList::WithClient
+    include ::Pixiv::IllustList::WithClient
 
     # @return [Pixiv::Member]
     def member
