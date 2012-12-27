@@ -89,6 +89,13 @@ module Pixiv
       illust_list_with_class(PrivateBookmarkList, member_or_id, page)
     end
 
+    def search_result_list(query, opts = {})
+      attrs = {query: query, search_opts: opts}
+      SearchResultList.lazy_new(attrs) {
+        agent.get(SearchResultList.url(query, opts))
+      }.bind(self)
+    end
+
     # @param [Pixiv::IllustList] list
     # @!macro [new] opts_and_return
     #   @param [Hash] opts
@@ -117,6 +124,11 @@ module Pixiv
     # @!macro opts_and_return
     def private_bookmarks(page = 1, opts = {})
       illusts(private_bookmark_list(member_id, page), opts)
+    end
+
+    # (see {SearchResultList.url})
+    def search(query, opts = {})
+      illusts(search_result_list(query, opts))
     end
 
     # Downloads the image to +io_or_filename+

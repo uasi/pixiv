@@ -51,6 +51,10 @@ def PBL(p = 1)
   $pixiv.private_bookmark_list(p)
 end
 
+def SRL(query, opts = {})
+  $pixiv.search_result_list(query, opts)
+end
+
 def Is(list)
   $pixiv.illusts(list)
 end
@@ -61,4 +65,8 @@ end
 
 def Bs(member)
   $pixiv.bookmarks(member)
+end
+
+def S(query, opts = {})
+  $pixiv.search(query, opts)
 end
