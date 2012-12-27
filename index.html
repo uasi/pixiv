@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pixiv gem by uasi</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Pixiv gem</h1>
+        <p>A client library for pixiv</p>
+        <p class="view"><a href="https://github.com/uasi/pixiv">View the Project on GitHub <small>uasi/pixiv</small></a></p>
+        <ul>
+          <li><a href="https://github.com/uasi/pixiv/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/uasi/pixiv/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/uasi/pixiv">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Pixiv gem</h1>
+
+<p>A client library for <a href="http://www.pixiv.net/">pixiv</a></p>
+
+<p><a href="http://travis-ci.org/uasi/pixiv"><img src="https://secure.travis-ci.org/uasi/pixiv.png?branch=master" alt="Build Status"></a>
+<a href="https://gemnasium.com/uasi/pixiv"><img src="https://gemnasium.com/uasi/pixiv.png?travis" alt="Dependency Status"></a>
+<a href="https://codeclimate.com/github/uasi/pixiv"><img src="https://codeclimate.com/badge.png" alt="Code Climate"></a></p>
+
+<h2>Important Note</h2>
+
+<p>The pixiv Guidelines [<a href="http://www.pixiv.net/guideline.php?lang=en">en</a>, <a href="http://www.pixiv.net/guideline.php?lang=ja">ja</a>] prohibit to
+crawl the pixiv service. Do not abuse this library or you may be banned!</p>
+
+<h2>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'pixiv'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install pixiv
+</code></pre>
+
+<h2>Synopsis</h2>
+
+<div class="highlight"><pre>
+<span class="n">pixiv</span> <span class="o">=</span> <span class="no">Pixiv</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">'pixiv_id'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">agent</span><span class="o">|</span>
+  <span class="n">agent</span><span class="o">.</span><span class="n">user_agent_alias</span> <span class="o">=</span> <span class="s1">'Mac Safari'</span>
+<span class="p">}</span>
+
+<span class="n">illust_id</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="n">illust</span> <span class="o">=</span> <span class="n">pixiv</span><span class="o">.</span><span class="n">illust</span><span class="p">(</span><span class="n">illust_id</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">illust</span><span class="o">.</span><span class="n">manga?</span>
+  <span class="n">pixiv</span><span class="o">.</span><span class="n">download_manga</span><span class="p">(</span><span class="n">illust</span><span class="p">,</span> <span class="o">[</span><span class="s1">'manga/'</span><span class="p">,</span> <span class="ss">:image_name</span><span class="o">]</span><span class="p">)</span>
+<span class="k">else</span>
+  <span class="n">pixiv</span><span class="o">.</span><span class="n">download_illust</span><span class="p">(</span><span class="n">illust</span><span class="p">,</span> <span class="o">[</span><span class="s1">'illust/'</span><span class="p">,</span> <span class="ss">:image_name</span><span class="o">]</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">member_id</span> <span class="o">=</span> <span class="mi">456</span>
+<span class="n">member</span> <span class="o">=</span> <span class="n">pixiv</span><span class="o">.</span><span class="n">member</span><span class="p">(</span><span class="n">member_id</span><span class="p">)</span>
+<span class="n">member</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">illust</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">illust</span><span class="o">.</span><span class="n">title</span>
+  <span class="nb">puts</span> <span class="n">illust</span><span class="o">.</span><span class="n">caption</span>
+<span class="k">end</span>
+
+<span class="n">me</span> <span class="o">=</span> <span class="n">pixiv</span><span class="o">.</span><span class="n">member</span>
+<span class="n">me</span><span class="o">.</span><span class="n">bookmarks</span> <span class="k">do</span> <span class="o">|</span><span class="n">illust</span><span class="o">|</span>
+  <span class="n">author</span> <span class="o">=</span> <span class="n">illust</span><span class="o">.</span><span class="n">member</span>
+  <span class="nb">puts</span> <span class="n">author</span><span class="o">.</span><span class="n">name</span>
+  <span class="nb">puts</span> <span class="n">author</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">count</span>
+<span class="k">end</span>
+
+</pre></div>
+
+<h2>Usage</h2>
+
+<p>See <a href="https://gist.github.com/4362297">a sample script</a></p>
+
+<h2>Documentation</h2>
+
+<p><a href="http://rubydoc.info/github/uasi/pixiv/master/frames">Documentation for uasi/pixiv on rubydoc.info</a></p>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/uasi">uasi</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
