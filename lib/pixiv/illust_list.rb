@@ -3,6 +3,14 @@ module Pixiv
   class IllustList < Page
     include PageCollection
 
+    def doc
+      unless @doc
+        super
+        check_bounds!
+      end
+      @doc
+    end
+
     # @return [Integer]
     attr_reader :page
     # @return [Integer]
@@ -20,6 +28,13 @@ module Pixiv
     # @return [Array<{Symbol=>Object}, nil>]
     def illust_hashes
       page_hashes
+    end
+
+    protected
+
+    def check_bounds!
+      max_page = total_count / max_size + 1
+      raise Error::OutOfBounds unless (1..max_page).include?(page)
     end
   end
 
