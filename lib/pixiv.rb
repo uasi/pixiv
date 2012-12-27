@@ -1,4 +1,5 @@
 require 'mechanize'
+require 'uri'
 
 module Pixiv
   autoload :BookmarkList,        'pixiv/bookmark_list'
@@ -11,6 +12,7 @@ module Pixiv
   autoload :Page,                'pixiv/page'
   autoload :PageCollection,      'pixiv/page_collection'
   autoload :PrivateBookmarkList, 'pixiv/bookmark_list'
+  autoload :SearchResultList,    'pixiv/search_result_list'
   autoload :WorkList,            'pixiv/work_list'
 
   ROOT_URL = 'http://www.pixiv.net'
