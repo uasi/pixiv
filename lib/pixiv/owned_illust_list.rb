@@ -52,6 +52,9 @@ module Pixiv
     def max_size
       ILLUSTS_PER_PAGE
     end
+
+    # @!parse alias owner_id member_id
+    def owner_id; member_id end
   end
 
   module OwnedIllustList::WithClient
@@ -61,5 +64,8 @@ module Pixiv
     def member
       client.member(member_id)
     end
+
+    # @!parse alias owner member
+    def owner; member end
   end
 end

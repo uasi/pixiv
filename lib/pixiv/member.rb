@@ -26,14 +26,28 @@ module Pixiv
   module Member::WithClient
     include Page::WithClient
 
-    # (see Pixiv::Client#bookmark_list)
-    def bookmark_list(page_num = 1)
-      client.bookmark_list(self, page_num)
+    def work_list(page = 1)
+      client.work_list(self, page)
     end
 
-    # (see Pixiv::Client#bookmarks)
-    def bookmarks(page_num = 1, &block)
-      client.bookmarks(self, page_num, &block)
+    def bookmark_list(page = 1)
+      client.bookmark_list(self, page)
+    end
+
+    def private_bookmark_list(page = 1)
+      client.private_bookmark_list(self, page)
+    end
+
+    def works(page = 1, &block)
+      client.works(self, page, &block)
+    end
+
+    def bookmarks(page = 1, &block)
+      client.bookmarks(self, page, &block)
+    end
+
+    def private_bookmarks(page = 1, &block)
+      client.private_bookmarks(page, &block)
     end
   end
 end

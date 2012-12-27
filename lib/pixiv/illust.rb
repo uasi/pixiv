@@ -53,6 +53,8 @@ module Pixiv
     lazy_attr_reader(:score) { at!('.score-count').inner_text.to_i }
 
     alias id illust_id
+    alias author_id member_id
+    alias author_name member_name
     alias original_image_referrer original_image_referer # referrer vs. referer
 
     # @return [String]
@@ -78,8 +80,11 @@ module Pixiv
 
     # @return [Pixiv::Member]
     def member
-      client.member(member_id)
+      attrs = {member_id: member_id, member_name: member_name}
+      Member.lazy_new(attrs) { client.agent.get(Member.url(member_id)) }
     end
+
+    alias author member
 
     # Download illust
     #
