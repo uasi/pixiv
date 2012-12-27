@@ -24,6 +24,14 @@ module Pixiv
       not_implemented!
     end
 
+    def next_attrs
+      {}
+    end
+
+    def prev_attrs
+      {}
+    end
+
     def page_class
       not_implemented!
     end
@@ -80,7 +88,8 @@ module Pixiv
       loop do
         yield collection
         next_url = collection.next_url or break
-        collection = collection.class.lazy_new { @client.agent.get(next_url) }
+        next_attrs = collection.next_attrs
+        collection = collection.class.lazy_new(next_attrs) { @client.agent.get(next_url) }
       end
     end
 

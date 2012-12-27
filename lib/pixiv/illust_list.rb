@@ -53,12 +53,12 @@ module Pixiv
     # @returns [Illust, nil]
     def next
       return if last?
-      self.class.lazy_new { client.agent.get(next_url) }
+      self.class.lazy_new(next_attrs) { client.agent.get(next_url) }
     end
 
     def prev
       return if first?
-      self.class.lazy_new { client.agent.get(prev_url) }
+      self.class.lazy_new(next_attrs) { client.agent.get(prev_url) }
     end
   end
 end
