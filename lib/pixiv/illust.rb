@@ -31,6 +31,8 @@ module Pixiv
     lazy_attr_reader(:member_id) { at!('#rpc_u_id')['title'].to_i }
     # @return [String]
     lazy_attr_reader(:member_name) {
+      # Note: generally member_name can easily be found at +at('.profile_area a')['title']+
+      # but this is not the case on your own illust page; so this hack.
       at!('title').inner_text[%r!^「#{Regexp.escape(title)}」/「(.+)」の(?:イラスト|漫画) \[pixiv\]$!, 1]
     }
     # @return [String]
