@@ -20,11 +20,11 @@ module Pixiv
 
     # @return [Integer]
     lazy_attr_reader(:page) {
-      at!('li.pages-current').inner_text.to_i
+      at!('ul.page-list .current').inner_text.to_i
     }
     # @return [Boolean]
     lazy_attr_reader(:last?) {
-      at!('li.pages-current').next_element.inner_text.to_i == 0
+      at!('ul.page-list .current').next_element.nil?
     }
     # @return [Integer]
     lazy_attr_reader(:member_id) {
