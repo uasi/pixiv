@@ -11,13 +11,14 @@ module Pixiv
     end
 
     # @return [String]
-    lazy_attr_reader(:name) { at!('.profile_area h2').inner_text }
+    lazy_attr_reader(:name) { at!('.profile-unit h1').inner_text }
     # @return [Integer]
-    lazy_attr_reader(:member_id) { at!('input[name="user_id"]')['value'].to_i }
+    #lazy_attr_reader(:member_id) { at!('input[name="user_id"]')['value'].to_i }
+    lazy_attr_reader(:member_id) { at!('link[hreflang=en]')['href'][%r{/users/(\d+)}, 1].to_i }
     # @return [Integer]
     lazy_attr_reader(:pixiv_id) { profile_image_url[%r{/profile/([a-z_-]+)/}, 1] }
     # @return [String]
-    lazy_attr_reader(:profile_image_url) { at!('.profile_area img')['src'] }
+    lazy_attr_reader(:profile_image_url) { at!('.profile-unit .user-image')['src'] }
 
 
     alias id member_id
