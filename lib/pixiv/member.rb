@@ -13,7 +13,6 @@ module Pixiv
     # @return [String]
     lazy_attr_reader(:name) { at!('.profile-unit h1').inner_text }
     # @return [Integer]
-    #lazy_attr_reader(:member_id) { at!('input[name="user_id"]')['value'].to_i }
     lazy_attr_reader(:member_id) { at!('link[hreflang=en]')['href'][%r{/users/(\d+)}, 1].to_i }
     # @return [Integer]
     lazy_attr_reader(:pixiv_id) { profile_image_url[%r{/profile/([a-z_-]+)/}, 1] }
