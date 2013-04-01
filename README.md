@@ -56,7 +56,7 @@ member.works.each do |illust|
 end
 
 me = pixiv.member
-me.bookmarks do |illust|
+me.bookmarks.each do |illust|
   author = illust.member
   puts author.name
   puts author.works.count
