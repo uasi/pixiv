@@ -7,14 +7,14 @@ module Pixiv
 
     # @return [Integer]
     lazy_attr_reader(:total_count) {
-      node = at!('.layout-cell .count-badge')
+      node = at!('.manage-unit .count-badge')
       node.inner_text[/\d+/].to_i
     }
     # @return [String, nil] member_name
     #   member_name == nil if this work list is your own
     lazy_attr_reader(:member_name) {
-      node = doc.at('.profile_area a')
-      node && node['title']
+      node = doc.at('.profile-unit h1')
+      node && node.inner_text
     }
     # @return [Array<Hash{Symbol=>Object}, nil>]
     lazy_attr_reader(:page_hashes) {
