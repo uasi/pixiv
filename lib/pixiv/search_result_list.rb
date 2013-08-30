@@ -63,7 +63,8 @@ module Pixiv
     attr_reader :search_opts
 
     lazy_attr_reader(:page) {
-      at!('.page-list li.current').inner_text.to_i
+      node = doc.at('.page-list li.current')
+      node ? node.inner_text.to_i : 1
     }
     lazy_attr_reader(:last?) {
       doc.at('//div[@class="pager-container"]//a[@rel="next"]').nil?
