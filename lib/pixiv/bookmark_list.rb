@@ -7,7 +7,7 @@ module Pixiv
 
     # @return [Integer]
     lazy_attr_reader(:total_count) {
-      node = at!('a[href="/bookmark.php?type=illust_all"]')
+      node = at!('.column-label .count-badge')
       node.inner_text[/\d+/].to_i
     }
     # @return [Array<Hash{Symbol=>Object}, nil>]
