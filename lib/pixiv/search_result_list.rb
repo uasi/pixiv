@@ -63,16 +63,16 @@ module Pixiv
     attr_reader :search_opts
 
     lazy_attr_reader(:page) {
-      at!('.pager li.current').inner_text.to_i
+      at!('.page-list li.current').inner_text.to_i
     }
     lazy_attr_reader(:last?) {
-      doc.at('//nav[@class="pager"]//a[@rel="next"]').nil?
+      doc.at('//div[@class="pager-container"]//a[@rel="next"]').nil?
     }
     lazy_attr_reader(:total_count) {
-      at!('.info > .count').inner_text.to_i
+      at!('.column-label > .count-badge').inner_text.to_i
     }
     lazy_attr_reader(:page_hashes) {
-      search!('#search-result li.image').map {|n| hash_from_list_item(n) }
+      search!('.column-search-result li.image-item').map {|n| hash_from_list_item(n) }
     }
 
     def url
@@ -112,13 +112,13 @@ module Pixiv
     private
 
     def hash_from_list_item(node)
-      member_node = node.at('p.user a')
-      illust_node = node.at('a')
+      member_node = node.at('.user')
+      illust_node = node.at('.work')
       illust_id = illust_node['href'][/illust_id=(\d+)/, 1].to_i
       {
         url: Illust.url(illust_id),
         illust_id: illust_id,
-        title: illust_node.at('h2').inner_text,
+        title: illust_node.at('h1').inner_text,
         member_id: member_node['href'][/\?id=(\d+)/, 1].to_i,
         member_name: member_node.inner_text,
         small_image_url: illust_node.at('img')['src'],
