@@ -74,7 +74,7 @@ module Pixiv
     def work_list(member_or_id = member_id, page = 1)
       list = illust_list_with_class(WorkList, member_or_id, page)
       # Cheat; member_name will not found on your own work list.
-      list.send(:set_attrs!, member_name: member_name) if list.owner_id == member_id
+      list.send(:set_attrs!, member_name: member.name) if list.owner_id == member_id
       list
     end
 
