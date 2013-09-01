@@ -15,9 +15,9 @@ module Pixiv
     # @return [String]
     lazy_attr_reader(:small_image_url) { at!('meta[property="og:image"]')['content'] }
     # @return [String]
-    lazy_attr_reader(:medium_image_url) { image_url_components.join('_m') }
+    lazy_attr_reader(:medium_image_url) { at!('.works_display img')['src'] }
     # @return [String]
-    lazy_attr_reader(:original_image_url) { illust? && image_url_components.join('') }
+    lazy_attr_reader(:original_image_url) { illust? ? image_url_components.join('') : nil }
     # @return [Array<String>]
     lazy_attr_reader(:original_image_urls) {
       illust? ? [original_image_url]
@@ -68,15 +68,11 @@ module Pixiv
     def illust?; !manga? end
     # @return [Boolean]
     def manga?; !!num_pages end
-    # @return [String]
-    def medium_image_url; image_url_components.join('_m') end
-    # @return [String]
-    def original_image_url; image_url_components.join('') end
 
     private
 
     def image_url_components
-      @image_url_components ||= small_image_url.match(%r{^(.+)_s(\.\w+(?:\?\d+)?)$}).to_a[1, 3]
+      @image_url_components ||= medium_image_url.match(%r{^(.+)_m(\.\w+(?:\?\d+)?)$}).to_a[1, 3]
     end
   end
 
