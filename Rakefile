@@ -14,3 +14,8 @@ task :console do
     exec "#{load_env} && pry -r #{console_helper} -e 'init;'"
   end
 end
+
+task :test do
+  exec "rspec spec"
+end
+
