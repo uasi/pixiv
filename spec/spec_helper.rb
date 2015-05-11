@@ -1,6 +1,7 @@
 require 'pixiv'
 require 'mechanize'
 require 'webmock/rspec'
+require 'rspec/its'
 
 # Disable "should" syntax.
 RSpec.configure do |config|
