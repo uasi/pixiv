@@ -17,9 +17,9 @@ describe Pixiv::Illust do
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345.jpg' }
-    its(:num_pages) { should be_nil }
-    its(:illust?) { should be_true }
-    its(:manga?) { should be_false }
+    its(:num_pages) { should == nil }
+    its(:illust?) { should == true }
+    its(:manga?) { should == false }
   end
 
   describe '.new', 'given attrs covers attrs extracted from doc' do
@@ -35,6 +35,7 @@ describe Pixiv::Illust do
         rated_count: 13,
         score: 130,
         small_image_url: 'http://i1.pixiv.net/img1/img/duke/105_s.jpg',
+        medium_image_url: 'http://i1.pixiv.net/img1/img/duke/105_m.jpg',
       }
     end
     subject { Pixiv::Illust.new(illust_doc, @attrs) }
@@ -50,9 +51,9 @@ describe Pixiv::Illust do
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105.jpg' }
-    its(:num_pages) { should be_nil }
-    its(:illust?) { should be_true }
-    its(:manga?) { should be_false }
+    its(:num_pages) { should == nil }
+    its(:illust?) { should == true }
+    its(:manga?) { should == false }
   end
 
   describe '.url' do
