@@ -1,7 +1,12 @@
 language: ruby
 rvm:
   - ruby-head
+  - 2.2.2
+  - 2.1.6
+  - 2.0.0
   - 1.9.3
 notifications:
   email:
     - uasi@uasi.jp
+    - jecy00@gmail.com
+
