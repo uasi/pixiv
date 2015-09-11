@@ -18,7 +18,7 @@ module Pixiv
     }
     # @return [Array<Hash{Symbol=>Object}, nil>]
     lazy_attr_reader(:page_hashes) {
-      node = search!('.display_works li') \
+      node = search!('._image-items li') \
         .xpath('self::node()[not(starts-with(a[1]/@href, "/bookmark"))]')
       node.map {|n| hash_from_list_item(n) }
     }
