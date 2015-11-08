@@ -17,6 +17,7 @@ describe Pixiv::Illust do
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345.jpg' }
+    its(:mypixiv_only?) { should == false }
     its(:num_pages) { should == nil }
     its(:illust?) { should == true }
     its(:manga?) { should == false }
@@ -51,6 +52,7 @@ describe Pixiv::Illust do
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105.jpg' }
+    its(:mypixiv_only?) { should == false }
     its(:num_pages) { should == nil }
     its(:illust?) { should == true }
     its(:manga?) { should == false }
@@ -61,5 +63,12 @@ describe Pixiv::Illust do
       expect(Pixiv::Illust.url(345)).
         to eq('http://www.pixiv.net/member_illust.php?mode=medium&illust_id=345')
     end
+  end
+
+  describe 'mypixiv_only?' do
+    let(:illust_doc) { fixture_as_doc('mypixiv_only.html') }
+
+    subject { Pixiv::Illust.new(illust_doc) }
+    its(:mypixiv_only?) { should == true }
   end
 end
