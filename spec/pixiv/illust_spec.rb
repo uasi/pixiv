@@ -37,6 +37,7 @@ describe Pixiv::Illust do
         score: 130,
         small_image_url: 'http://i1.pixiv.net/img1/img/duke/105_s.jpg',
         medium_image_url: 'http://i1.pixiv.net/img1/img/duke/105_m.jpg',
+        mypixiv_only?: true,
       }
     end
     subject { Pixiv::Illust.new(illust_doc, @attrs) }
@@ -52,7 +53,7 @@ describe Pixiv::Illust do
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105.jpg' }
-    its(:mypixiv_only?) { should == false }
+    its(:mypixiv_only?) { should == true }
     its(:num_pages) { should == nil }
     its(:illust?) { should == true }
     its(:manga?) { should == false }
