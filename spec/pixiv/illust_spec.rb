@@ -14,6 +14,7 @@ describe Pixiv::Illust do
     its(:views_count) { should == 1000 }
     its(:rated_count) { should == 10 }
     its(:score) { should == 100 }
+    its(:upload_at) { should == Time.local(2015, 8, 3, 9, 12, 0)  }
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/sayoko/345.jpg' }
@@ -34,6 +35,7 @@ describe Pixiv::Illust do
         views_count: 1300,
         rated_count: 13,
         score: 130,
+        upload_at:  Time.local(2015, 10, 21, 11, 1, 0),
         small_image_url: 'http://i1.pixiv.net/img1/img/duke/105_s.jpg',
         medium_image_url: 'http://i1.pixiv.net/img1/img/duke/105_m.jpg',
       }
@@ -48,6 +50,7 @@ describe Pixiv::Illust do
     its(:views_count) { should == 1300 }
     its(:rated_count) { should == 13 }
     its(:score) { should == 130 }
+    its(:upload_at) { should ==Time.local(2015, 10, 21, 11, 1, 0) }
     its(:small_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_s.jpg' }
     its(:medium_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105_m.jpg' }
     its(:original_image_url) { should == 'http://i1.pixiv.net/img1/img/duke/105.jpg' }

@@ -35,6 +35,8 @@ module Pixiv
       # but this is not the case on your own illust page; so this hack.
       at!('title').inner_text[%r!^「#{Regexp.escape(title)}」/「(.+)」の(?:イラスト|漫画) \[pixiv\]$!, 1]
     }
+    # @return [Time]
+    lazy_attr_reader(:upload_at) { get_upload_at }
     # @return [String]
     lazy_attr_reader(:title) { at!('.work-info h1.title').inner_text }
     # @return [Integer, nil]
@@ -70,6 +72,14 @@ module Pixiv
     def manga?; !!num_pages end
 
     private
+
+    def get_upload_at
+      metadatas = at!('.meta li')
+      metadatas.children.each do |data|
+        return Time.strptime(data.content, "%Y年%m月%d日 %H:%M") if data.content.index "年"
+      end
+      nil
+    end
 
     def image_url_components
       @image_url_components ||= medium_image_url.match(%r{^(.+)_m(\.\w+(?:\?\d+)?)$}).to_a[1, 3]
