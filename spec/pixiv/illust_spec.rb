@@ -62,4 +62,11 @@ describe Pixiv::Illust do
         to eq('http://www.pixiv.net/member_illust.php?mode=medium&illust_id=345')
     end
   end
+
+  describe 'no caption user' do
+    let(:illust_doc) { fixture_as_doc('empty.html') }
+
+    subject { Pixiv::Illust.new(illust_doc) }
+    its(:caption) { should == "" }
+  end
 end

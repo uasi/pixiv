@@ -46,7 +46,15 @@ module Pixiv
     # @return [Array<String>]
     lazy_attr_reader(:tag_names) { search!('ul.tags a.text').map {|n| n.inner_text } }
     # @return [String]
-    lazy_attr_reader(:caption) { at!('.work-info .caption').inner_text }
+    lazy_attr_reader(:caption) {
+      node = doc.at('.work-info .caption')
+      if node
+        node.inner_text
+      else
+        ""
+      end
+    }
+
     # @api experimental
     # @return [Array<Nokogiri::XML::NodeSet, nil>]
     lazy_attr_reader(:anchors_in_caption) { doc.search('.work-info .caption a') }
