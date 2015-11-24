@@ -75,4 +75,11 @@ describe Pixiv::Illust do
     subject { Pixiv::Illust.new(illust_doc) }
     its(:mypixiv_only?) { should == true }
   end
+
+  describe 'no caption user' do
+    let(:illust_doc) { fixture_as_doc('empty.html') }
+
+    subject { Pixiv::Illust.new(illust_doc) }
+    its(:caption) { should == "" }
+  end
 end
