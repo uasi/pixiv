@@ -28,7 +28,7 @@ module Pixiv
     # @return [Integer]
     lazy_attr_reader(:illust_id) { at!('#rpc_i_id')['title'].to_i }
     # @return [Integer]
-    lazy_attr_reader(:member_id) { at!('#rpc_u_id')['title'].to_i }
+    lazy_attr_reader(:member_id) { at!('.user-link').attributes['href'].text.match('id=([0-9]*)')[1].to_i }
     # @return [String]
     lazy_attr_reader(:member_name) {
       # Note: generally member_name can easily be found at +at('.profile_area a')['title']+
