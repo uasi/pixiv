@@ -83,7 +83,7 @@ module Pixiv
     def manga?; !!num_pages end
 
     # @return [Boolean]
-    lazy_attr_reader(:delete?) { is_delete? }
+    lazy_attr_reader(:deleted?) { is_deleted? }
 
     private
 
@@ -99,7 +99,7 @@ module Pixiv
       @image_url_components ||= medium_image_url.match(%r{^(.+)_m(\.\w+(?:\?\d+)?)$}).to_a[1, 3]
     end
 
-    def is_delete?
+    def is_deleted?
       nodes = doc.search("._unit span")
       return false unless nodes
       nodes.each do |node|
