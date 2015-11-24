@@ -57,6 +57,9 @@ module Pixiv
     # @return [Integer]
     lazy_attr_reader(:score) { at!('.score-count').inner_text.to_i }
 
+    # @return [Boolean]
+    lazy_attr_reader(:mypixiv_only?) { doc.at('[@class="_no-item closed"]').nil?.! }
+
     alias id illust_id
     alias author_id member_id
     alias author_name member_name
