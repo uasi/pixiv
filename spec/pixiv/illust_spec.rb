@@ -22,6 +22,7 @@ describe Pixiv::Illust do
     its(:num_pages) { should == nil }
     its(:illust?) { should == true }
     its(:manga?) { should == false }
+    its(:deleted?) { should == false }
   end
 
   describe '.new', 'given attrs covers attrs extracted from doc' do
@@ -40,6 +41,7 @@ describe Pixiv::Illust do
         small_image_url: 'http://i1.pixiv.net/img1/img/duke/105_s.jpg',
         medium_image_url: 'http://i1.pixiv.net/img1/img/duke/105_m.jpg',
         mypixiv_only?: true,
+        deleted?: true,
       }
     end
     subject { Pixiv::Illust.new(illust_doc, @attrs) }
@@ -60,8 +62,16 @@ describe Pixiv::Illust do
     its(:num_pages) { should == nil }
     its(:illust?) { should == true }
     its(:manga?) { should == false }
+    its(:deleted?) { should == true }
   end
 
+  describe 'delete illust page' do
+    let(:illust_doc) { fixture_as_doc('delete.html') }
+
+    subject { Pixiv::Illust.new(illust_doc) }
+    its(:deleted?) { should == true }
+  end
+  
   describe '.url' do
     it 'returns url for illust id' do
       expect(Pixiv::Illust.url(345)).
