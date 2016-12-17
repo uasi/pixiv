@@ -17,7 +17,7 @@ module Pixiv
     # @return [String]
     lazy_attr_reader(:medium_image_url) { at!('.works_display img')['src'] }
     # @return [String]
-    lazy_attr_reader(:original_image_url) { illust? ? image_url_components.join('') : nil }
+    lazy_attr_reader(:original_image_url) { illust? ? image_url_components[0] + 'img-original/img/' + image_url_components[1] + '0' + image_url_components[2] : nil }
     # @return [Array<String>]
     lazy_attr_reader(:original_image_urls) {
       illust? ? [original_image_url]
@@ -96,7 +96,7 @@ module Pixiv
     end
 
     def image_url_components
-      @image_url_components ||= medium_image_url.match(%r{^(.+)_m(\.\w+(?:\?\d+)?)$}).to_a[1, 3]
+      @image_url_components ||= medium_image_url.match(%r{^([^/]+//[^/]+/).+img/(.+p)0_m[^.]+(\.\w+(?:\?\d+)?)$}).to_a[1, 3]
     end
 
     def is_deleted?
