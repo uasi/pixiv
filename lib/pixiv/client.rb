@@ -224,7 +224,7 @@ module Pixiv
     end
 
     def member_id_from_mypage(doc)
-      doc.at('a.user-link')['href'][/\d+$/].to_i
+      doc.at('a.user-name')['href'][/\d+$/].to_i
     end
   end
 
