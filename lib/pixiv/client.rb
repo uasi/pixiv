@@ -41,12 +41,12 @@ module Pixiv
     # @param [String] pixiv_id
     # @param [String] password
     def login(pixiv_id, password)
-      doc = agent.get("#{ROOT_URL}/index.php")
+      doc = agent.get("https://accounts.pixiv.net/login?lang=ja&source=pc&view_type=page")
       return if doc && doc.body =~ /logout/
-      form = doc.forms_with(action: 'https://www.secure.pixiv.net/login.php').first
+      form = doc.forms_with(action: '/login').first
       puts doc.body and raise Error::LoginFailed, 'login form is not available' unless form
       form.pixiv_id = pixiv_id
-      form.pass = password
+      form.password = password
       doc = agent.submit(form)
       raise Error::LoginFailed unless doc && doc.body =~ /logout/
       @member_id = member_id_from_mypage(doc)
@@ -144,7 +144,7 @@ module Pixiv
       referer = case size
                 when :small then nil
                 when :medium then illust.url
-                when :original then illust.original_image_referer
+                when :original then illust.url
                 else raise ArgumentError, "unknown size `#{size}`"
                 end
       save_to = io_or_filename
